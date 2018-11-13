@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>订单详情</title>
+    <script>
+        (function (doc, win) {
+            var docEl = doc.documentElement,//设备宽度
+                rem = 100, //1rem代表100px
+                desW = 750, //设计稿宽度
+                resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+                recalc = function () {
+                    var clientWidth = docEl.clientWidth;
+                    if (!clientWidth) return;
+                    if (clientWidth >= desW) {
+                        docEl.style.fontSize = rem + "px";
+                    } else {
+                        docEl.style.fontSize = rem * (clientWidth / desW) + 'px';
+                    }
+                };
+
+            if (!doc.addEventListener) return;
+            win.addEventListener(resizeEvt, recalc, false);
+            doc.addEventListener('DOMContentLoaded', recalc, false);
+        })(document, window);
+    </script>
+</head>
+<style>
+    @media (min-width: 320px) {
+        html {
+            font-size: 42.6667px;
+        }
+    }
+
+    @media (min-width: 360px) {
+        html {
+            font-size: 48px;
+        }
+    }
+
+    @media (min-width: 375px) {
+        html {
+            font-size: 50px;
+        }
+    }
+
+    @media (min-width: 384px) {
+        html {
+            font-size: 51.2px;
+        }
+    }
+
+    @media (min-width: 414px) {
+        html {
+            font-size: 55.2px;
+        }
+    }
+
+    @media (min-width: 448px) {
+        html {
+            font-size: 59.7333px;
+        }
+    }
+
+    @media (min-width: 480px) {
+        html {
+            font-size: 48px;
+        }
+    }
+
+    @media (min-width: 512px) {
+        html {
+            font-size: 68.2667px;
+        }
+    }
+
+    @media (min-width: 544px) {
+        html {
+            font-size: 72.5333px;
+        }
+    }
+
+    @media (min-width: 576px) {
+        html {
+            font-size: 76.8px;
+        }
+    }
+
+    @media (min-width: 608px) {
+        html {
+            font-size: 81.0667px;
+        }
+    }
+
+    @media (min-width: 640px) {
+        html {
+            font-size: 85.3333px;
+        }
+    }
+
+    @media (min-width: 750px) {
+        html {
+            font-size: 100px;
+        }
+    }
+
+    body {
+        font-size: 14px;
+        margin: 0;
+        padding: 0;
+        background: rgba(239, 239, 244, 1);
+        background-size: 100%;
+    }
+
+    ul,
+    li {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .container {
+        background: rgba(239, 239, 244, 1);
+        margin: 0 auto;
+    }
+
+    .form-panel {
+        margin: 0 auto;
+        padding: 0 0.26rem;
+        margin-top: 0.20rem;
+        box-sizing: border-box;
+
+        width: 7.10rem;
+        height: 5.04rem;
+        background: rgba(255, 255, 255, 1);
+        border-radius: 22px;
+    }
+
+    .form-input {
+        padding-top: 0.36rem;
+        height: 0.64rem;
+        border-bottom: 1px solid rgba(240, 240, 240, 1);
+    }
+
+    .product-panel {
+        box-sizing: border-box;
+        padding: 0 0.25rem;
+        margin: 0 auto;
+        margin-top: 0.2rem;
+        width: 7.10rem;
+        height: 4.04rem;
+        background: rgba(255, 255, 255, 1);
+        border-radius: 0.22rem;
+    }
+
+    .product-panel .header,
+    .pay-panel .header {
+        padding-top: 0.2rem;
+        padding-bottom: 0.18rem;
+        border-bottom: 1px solid rgba(240, 240, 240, 1);
+    }
+
+    .product-panel .title,
+    .pay-panel .title {
+        margin: 0;
+        color: rgba(41, 41, 41, 1);
+        font-size: 0.30rem;
+        font-weight: 500;
+        line-height: 0.36rem;
+    }
+
+    .pay-panel {
+        box-sizing: border-box;
+        padding: 0 0.25rem;
+        margin: 0 auto;
+        margin-top: 0.19rem;
+        margin-bottom: 1.42rem;
+        width: 7.10rem;
+        height: 1.87rem;
+        background: rgba(255, 255, 255, 1);
+        border-radius: 0.22rem;
+    }
+
+    .pay-footer {
+        position: fixed;
+        width: 100%;
+        bottom: 0;
+        left: 0;
+        height: 1.12rem;
+        background: rgba(255, 255, 255, 1);
+    }
+
+    .total {
+        margin-top: 0.46rem;
+        margin-right: 0.52rem;
+        float: right;
+        font-size: 0.32rem;
+        font-weight: 500;
+        color: rgba(41, 41, 41, 1);
+        line-height: 0.36rem;
+    }
+
+    .total-label {
+        font-size: 0.22rem;
+    }
+
+    .submit-btn {
+        float: right;
+        margin-top: 0.28rem;
+        margin-right: 0.28rem;
+        width: 1.42rem;
+        height: 0.56rem;
+        background: rgba(51, 128, 255, 1);
+        border-radius: 0.28rem;
+
+        text-align: center;
+        line-height: 0.56rem;
+        font-size: 0.22rem;
+        font-weight: 400;
+        color: rgba(255, 255, 255, 1);
+
+    }
+
+    .form-input label {
+        vertical-align: top;
+        white-space: nowrap;
+        display: inline-block;
+        margin-right: 0.49rem;
+        width: 1.12rem;
+        font-size: 0.28rem;
+        font-weight: 400;
+        color: rgba(41, 41, 41, 1);
+        line-height: 0.36rem;
+    }
+
+    .form-input input {
+        vertical-align: top;
+        width: 4.88rem;
+        outline: none;
+        border: none;
+    }
+
+    .thumnail {
+        overflow: hidden;
+        padding-top: 0.19rem;
+    }
+
+    .product-pic {
+        float: left;
+        width: 1.44rem;
+        height: 1.44rem;
+        background: rgba(255, 255, 255, 1);
+        border: 1px solid rgba(239, 239, 239, 1);
+        background: url("./img/wechat.png") center no-repeat;
+        background-size: contain;
+    }
+
+    .product-wrapper {
+        margin-top: 0.1rem;
+        margin-left: 0.14rem;
+        float: left;
+    }
+
+    .product-title {
+        font-size: 0.28rem;
+        font-weight: 400;
+        color: rgba(41, 41, 41, 1);
+        line-height: 0.30rem;
+    }
+
+    .product-desc {
+        margin-top: 0.22rem;
+        font-size: 0.22rem;
+        font-weight: 400;
+        color: rgba(153, 153, 153, 1);
+        line-height: 0.36rem;
+    }
+
+    .product-detail {
+        margin-top: 0.32rem;
+    }
+
+    .product-detail .label {
+        float: left;
+    }
+
+    .product-detail .content {
+        float: right;
+    }
+
+    .product-price {
+        overflow: hidden;
+        font-size: 0.23rem;
+        font-weight: 400;
+        color: rgba(41, 41, 41, 1);
+        line-height: 0.36rem;
+    }
+
+    .product-discount {
+        overflow: hidden;
+        font-size: 0.23rem;
+        font-weight: 400;
+        color: rgba(41, 41, 41, 1);
+        line-height: 0.36rem;
+    }
+
+    .order-price {
+        overflow: hidden;
+        font-size: 0.28rem;
+        font-weight: 500;
+        color: rgba(41, 41, 41, 1);
+        line-height: 0.36rem;
+    }
+
+    .choose-way {
+        margin-top: 0.25rem;
+    }
+
+    .choose-way .choose-item {
+        margin-right: 0.24rem;
+        width: 0.23rem;
+        height: 0.23rem;
+        border-radius: 50%;
+        background: #fff;
+        box-shadow: 0 0 0 2px rgba(191, 191, 191, 1);
+        border: 0.1rem solid #fff;
+    }
+
+    .choose-way .choose-item.active {
+        box-shadow: 0 0 0 2px rgba(51, 128, 255, 1);
+        background: rgba(51, 128, 255, 1);
+
+    }
+
+    .wechat-wrapper {
+        float: left;
+    }
+
+    .alipay-wrapper {
+        float: right;
+    }
+
+    .wechat-wrapper div,
+    .alipay-wrapper div {
+        float: left;
+    }
+
+    .icon {
+        width: 0.47rem;
+        height: 0.47rem;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: contain;
+    }
+
+    .alipay-icon {
+        background-image: url("./img/alipay.png");
+    }
+
+    .wechat-icon {
+        background-image: url("./img/wechat.png");
+    }
+
+    .pay-text {
+        margin-top: 0.08rem;
+        margin-left: 0.44rem;
+        font-size: 0.28rem;
+        font-weight: 400;
+        color: rgba(41, 41, 41, 1);
+        line-height: 1;
+    }
+</style>
+
+<body>
+    <div class="container">
+        <div class="form-panel">
+            <div class="form-input">
+                <label for="receiver">收货人</label><input id="receiver" placeholder="收货人" type="text">
+            </div>
+            <div class="form-input">
+                <label for="phone">手机号</label><input id="phone" placeholder="手机号" type="text">
+            </div>
+            <div class="form-input">
+                <label for="city">收件地区</label><input id="city" placeholder="收件地区" type="text">
+            </div>
+            <div class="form-input">
+                <label for="address">详细地址</label><input id="address" placeholder="精确到门牌号码" type="text">
+            </div>
+            <div class="form-input">
+                <label for="poster">邮政编码</label><input id="poster" placeholder="选填" type="text">
+            </div>
+        </div>
+        <div class="product-panel">
+            <div class="header">
+                <h3 class="title">商品信息</h3>
+            </div>
+            <div class="thumnail">
+                <div class="product-pic">
+
+                </div>
+                <div class="product-wrapper">
+                    <div class="product-title">
+                        推广总监...
+                    </div>
+                    <div class="product-desc">
+                        赠送高级矿机
+                    </div>
+                </div>
+            </div>
+            <div class="product-detail">
+                <div class="product-price"><span class="label">商品金额</span><span class="content">¥9998</span></div>
+                <div class="product-discount"><span class="label">优惠</span><span class="content">-¥200</span></div>
+                <div class="order-price"><span class="label">订单金额</span><span class="content">¥9797</span></div>
+            </div>
+        </div>
+        <div class="pay-panel">
+            <div class="header">
+                <h3 class="title">支付方式</h3>
+            </div>
+            <div class="choose-way">
+                <div id="wechatPay" class="wechat-wrapper">
+                    <div class="choose-item wechat active"></div>
+                    <div class="icon wechat-icon"></div>
+                    <div class="pay-text">微信支付</div>
+                </div>
+                <div id="alipay" class="alipay-wrapper">
+                    <div class="choose-item alipay"></div>
+                    <div class="icon alipay-icon"></div>
+                    <div class="pay-text">支付宝支付</div>
+                </div>
+            </div>
+        </div>
+        <div class="pay-footer">
+            <div class="submit-btn" id="submit">提交订单</div>
+            <div class="total">
+                <span class="total-label">合计：</span>
+                <span>¥9798.00</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="./js/zepto.min.js"></script>
+    <script>
+        $("#wechatPay").on("click", function () {
+            $(this).children(".choose-item").addClass("active");
+            $("#alipay").children(".choose-item").removeClass("active");
+        })
+        $("#alipay").on("click", function () {
+            $(this).children(".choose-item").addClass("active");
+            $("#wechatPay").children(".choose-item").removeClass("active");
+        })
+    </script>
+</body>
+
+</html>

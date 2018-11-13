@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>会员</title>
+    <script>
+        (function (doc, win) {
+            var docEl = doc.documentElement,//设备宽度
+                rem = 100, //1rem代表100px
+                desW = 750, //设计稿宽度
+                resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+                recalc = function () {
+                    var clientWidth = docEl.clientWidth;
+                    if (!clientWidth) return;
+                    if (clientWidth >= desW) {
+                        docEl.style.fontSize = rem + "px";
+                    } else {
+                        docEl.style.fontSize = rem * (clientWidth / desW) + 'px';
+                    }
+                };
+
+            if (!doc.addEventListener) return;
+            win.addEventListener(resizeEvt, recalc, false);
+            doc.addEventListener('DOMContentLoaded', recalc, false);
+        })(document, window);
+    </script>
+</head>
+<style>
+    @media (min-width: 320px) {
+        html {
+            font-size: 42.6667px;
+        }
+    }
+
+    @media (min-width: 360px) {
+        html {
+            font-size: 48px;
+        }
+    }
+
+    @media (min-width: 375px) {
+        html {
+            font-size: 50px;
+        }
+    }
+
+    @media (min-width: 384px) {
+        html {
+            font-size: 51.2px;
+        }
+    }
+
+    @media (min-width: 414px) {
+        html {
+            font-size: 55.2px;
+        }
+    }
+
+    @media (min-width: 448px) {
+        html {
+            font-size: 59.7333px;
+        }
+    }
+
+    @media (min-width: 480px) {
+        html {
+            font-size: 48px;
+        }
+    }
+
+    @media (min-width: 512px) {
+        html {
+            font-size: 68.2667px;
+        }
+    }
+
+    @media (min-width: 544px) {
+        html {
+            font-size: 72.5333px;
+        }
+    }
+
+    @media (min-width: 576px) {
+        html {
+            font-size: 76.8px;
+        }
+    }
+
+    @media (min-width: 608px) {
+        html {
+            font-size: 81.0667px;
+        }
+    }
+
+    @media (min-width: 640px) {
+        html {
+            font-size: 85.3333px;
+        }
+    }
+
+    @media (min-width: 750px) {
+        html {
+            font-size: 100px;
+        }
+    }
+
+    body {
+        font-size: 14px;
+        margin: 0;
+        padding: 0;
+        background: #DB1043 url("./img/bj.png") left top no-repeat;
+        background-size: 100%;
+    }
+
+    ul,
+    li {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .container {
+        margin: 0 auto;
+    }
+
+    .block-wrapper {
+        margin: 0 auto;
+        width: 6.94rem;
+        margin-top: 5.3rem;
+    }
+
+    .block {
+        width: 6.94rem;
+        height: 2.00rem;
+        border-radius: 0.10rem;
+        margin-bottom: 0.19rem;
+    }
+
+    .block-one {
+        background: linear-gradient(90deg, rgba(243, 75, 66, 1) 0%, rgba(250, 124, 78, 1) 100%);
+    }
+
+    .block-two {
+        background: linear-gradient(90deg, rgba(247, 65, 133, 1) 0%, rgba(253, 137, 185, 1) 100%);
+    }
+
+    .block-three {
+        background: linear-gradient(90deg, rgba(119, 74, 255, 1) 1%, rgba(218, 117, 241, 1) 100%);
+    }
+
+    .block-four {
+        background: linear-gradient(90deg, rgba(48, 134, 228, 1) 0%, rgba(85, 195, 251, 1) 100%);
+    }
+
+    .icon {
+        margin-left: 0.24rem;
+        margin-top: 0.42rem;
+        float: left;
+        width: 1.17rem;
+        height: 1.17rem;
+        background-size: contain;
+        background-position: center center;
+        background-repeat: no-repeat;
+    }
+
+    .icon-ceo {
+        background-image: url("./img/zongjian.png");
+    }
+
+    .icon-cto {
+        background-image: url("./img/jinli.png");
+    }
+
+    .icon-svip {
+        background-image: url("./img/svip.png");
+    }
+
+    .icon-vip {
+        background-image: url("./img/vip.png");
+    }
+
+    .desc.mt58 {
+        margin-top: 0.58rem;
+    }
+
+    .desc {
+        margin-top: 0.36rem;
+        margin-left: 0.31rem;
+        float: left;
+    }
+
+    .open-btn {
+        margin-top: 0.67rem;
+        margin-right: 0.27rem;
+        float: right;
+        width: 1.66rem;
+        height: 0.64rem;
+        background: rgba(255, 255, 255, 1);
+        border-radius: 0.32rem;
+
+        text-align: center;
+        font-size: 0.26rem;
+        font-weight: 400;
+        color: rgba(41, 41, 41, 1);
+        line-height: 0.64rem;
+    }
+
+    .position {
+        font-size: 0.34rem;
+        font-weight: 400;
+        color: rgba(255, 255, 255, 1);
+        line-height: 0.47rem;
+    }
+
+    .gift {
+        font-size: 0.28rem;
+        font-weight: 400;
+        color: rgba(255, 255, 255, 1);
+        line-height: 0.47rem;
+    }
+
+    .price {
+        font-size: 0.28rem;
+        font-weight: bold;
+        color: rgba(255, 255, 255, 1);
+        line-height: 0.47rem;
+    }
+</style>
+
+<body>
+    <div class="container">
+        <div class="block-wrapper">
+            <div class="block block-one">
+                <div class="icon icon-ceo"></div>
+                <div class="desc">
+                    <div class="position">推广总监</div>
+                    <div class="gift">赠送高级矿机</div>
+                    <div class="price">¥9998</div>
+                </div>
+                <div class="open-btn">
+                    立即开通
+                </div>
+            </div>
+            <div class="block block-two">
+                <div class="icon icon-cto"></div>
+                <div class="desc">
+                    <div class="position">推广经理</div>
+                    <div class="gift">赠送中级矿机</div>
+                    <div class="price">¥6888</div>
+                </div>
+                <div class="open-btn">
+                    立即开通
+                </div>
+            </div>
+            <div class="block block-three">
+                <div class="icon icon-svip"></div>
+                <div class="desc mt58">
+                    <div class="position">高级VIP</div>
+                    <div class="price">¥999</div>
+                </div>
+                <div class="open-btn">
+                    立即开通
+                </div>
+            </div>
+            <div class="block block-four">
+                <div class="icon icon-vip"></div>
+                <div class="desc mt58">
+                    <div class="position">初级VIP</div>
+                    <div class="price">¥199</div>
+                </div>
+                <div class="open-btn">
+                    立即开通
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+    </script>
+</body>
+
+</html>
