@@ -136,7 +136,7 @@
         width: 7.10rem;
         height: 5.04rem;
         background: rgba(255, 255, 255, 1);
-        border-radius: 22px;
+        border-radius: 0.22rem;
     }
 
     .form-input {
@@ -241,6 +241,10 @@
         width: 4.88rem;
         outline: none;
         border: none;
+
+        font-size:0.28rem;
+        font-weight:400;
+        line-height:0.36rem;
     }
 
     .thumnail {
@@ -381,7 +385,7 @@
                 <label for="receiver">收货人</label><input id="receiver" placeholder="收货人" type="text">
             </div>
             <div class="form-input">
-                <label for="phone">手机号</label><input id="phone" placeholder="手机号" type="text">
+                <label for="phone">手机号</label><input id="phone" placeholder="手机号" maxlength="11" type="number">
             </div>
             <div class="form-input">
                 <label for="city">收件地区</label><input readonly="readonly" id="cityPicker" placeholder="收件地区" type="text">
@@ -444,8 +448,10 @@
 
     <script src="./js/zepto.min.js"></script>
     <script src="./js/picker.min.js" charset="utf-8"></script>
+    <script src="./js/show-toast.js"></script>
     <script src="./js/city.js" charset="utf-8"></script>
     <script>
+        //change tab
         $("#wechatPay").on("click", function () {
             $(this).children(".choose-item").addClass("active");
             $("#alipay").children(".choose-item").removeClass("active");
@@ -561,13 +567,76 @@
         });
 
         picker.on('picker.valuechange', function (selectedVal, selectedIndex) {
-            console.log(selectedVal);
-            console.log(selectedIndex);
+
         });
 
         nameEl.addEventListener('click', function () {
             picker.show();
         });
+
+        //提交表单
+
+        var receiver = document.getElementById("receiver");
+        var phone = document.getElementById("phone");
+        var cityPicker = document.getElementById("cityPicker");
+        var address = document.getElementById("address");
+        var poster = document.getElementById("poster");
+
+        function checkForm() {
+            if (receiver.value == "") {
+                showToast('收货人不能为空');
+                receiver.focus();
+                return false;
+            }
+            if (phone.value == "") {
+                showToast('手机号不能为空');
+                phone.focus();
+                return false;
+            }
+            if (!(/^1[3456789]\d{9}$/.test(phone.value))) {
+                showToast('手机号码格式不正确');
+                phone.focus();
+                return false;
+            }
+            if (cityPicker.value == "") {
+                showToast('收件地区不能为空');
+                cityPicker.focus();
+                return false;
+            }
+            if (address.value == "") {
+                showToast('详细地址不能为空');
+                address.focus();
+                return false;
+            }
+
+            return true;
+        }
+
+
+        function submitForm() {
+            console.log("ajax");
+
+            $.ajax({
+                url: "/",
+                method: "post",
+                data: {
+                    receiver: receiver.value,
+                    phone: phone.value,
+                    cityPicker: cityPicker.value,
+                    address: address.value,
+                    poster: poster.value,
+                    payWay: $(".choose-item.active").siblings().eq(1).html()
+                }
+            })
+        }
+
+        document.getElementById("submit").addEventListener("click", function () {
+            if (!checkForm()) {
+                return false;
+            }
+
+            submitForm();
+        })
     </script>
 </body>
 
