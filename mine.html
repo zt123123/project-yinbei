@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>我的会员</title>
+    <script>
+        (function (doc, win) {
+            var docEl = doc.documentElement,//设备宽度
+                rem = 100, //1rem代表100px
+                desW = 750, //设计稿宽度
+                resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+                recalc = function () {
+                    var clientWidth = docEl.clientWidth;
+                    if (!clientWidth) return;
+                    if (clientWidth >= desW) {
+                        docEl.style.fontSize = rem + "px";
+                    } else {
+                        docEl.style.fontSize = rem * (clientWidth / desW) + 'px';
+                    }
+                };
+
+            if (!doc.addEventListener) return;
+            win.addEventListener(resizeEvt, recalc, false);
+            doc.addEventListener('DOMContentLoaded', recalc, false);
+        })(document, window);
+    </script>
+</head>
+<style>
+    @media (min-width: 320px) {
+        html {
+            font-size: 42.6667px;
+        }
+    }
+
+    @media (min-width: 360px) {
+        html {
+            font-size: 48px;
+        }
+    }
+
+    @media (min-width: 375px) {
+        html {
+            font-size: 50px;
+        }
+    }
+
+    @media (min-width: 384px) {
+        html {
+            font-size: 51.2px;
+        }
+    }
+
+    @media (min-width: 414px) {
+        html {
+            font-size: 55.2px;
+        }
+    }
+
+    @media (min-width: 448px) {
+        html {
+            font-size: 59.7333px;
+        }
+    }
+
+    @media (min-width: 480px) {
+        html {
+            font-size: 48px;
+        }
+    }
+
+    @media (min-width: 512px) {
+        html {
+            font-size: 68.2667px;
+        }
+    }
+
+    @media (min-width: 544px) {
+        html {
+            font-size: 72.5333px;
+        }
+    }
+
+    @media (min-width: 576px) {
+        html {
+            font-size: 76.8px;
+        }
+    }
+
+    @media (min-width: 608px) {
+        html {
+            font-size: 81.0667px;
+        }
+    }
+
+    @media (min-width: 640px) {
+        html {
+            font-size: 85.3333px;
+        }
+    }
+
+    @media (min-width: 750px) {
+        html {
+            font-size: 100px;
+        }
+    }
+
+    body {
+        font-size: 14px;
+        margin: 0;
+        padding: 0;
+        background-color: #F3F3F3;
+        background-size: 100%;
+    }
+
+    ul,
+    li {
+        margin: 0;
+        padding: 0;
+        list-style-type: none;
+    }
+
+    .container {
+        margin: 0 auto;
+    }
+
+    .user-info {
+        margin: 0 auto;
+        width: 6.66rem;
+        height: 1.96rem;
+        background: url("./img/mem_bg.png") center no-repeat;
+        background-size: contain;
+    }
+
+    .avatar {
+        float: left;
+        width: 0.9rem;
+        height: 0.9rem;
+        border-radius: 50%;
+        background: #fff url("./img/zongjian.png") center no-repeat;
+        background-size: contain;
+        margin-left: 0.35rem;
+        margin-top: 0.37rem;
+    }
+
+    .user-container {
+        padding-top: 0.44rem;
+        background-color: #fff;
+    }
+
+    .user-wrapper {
+        margin-top: 0.42rem;
+        margin-left: 0.16rem;
+        float: left;
+    }
+
+    .nickname {
+        font-size: 0.32rem;
+        font-weight: 400;
+        color: rgba(255, 255, 255, 1);
+        line-height: 0.47rem;
+    }
+
+    .rank {
+        box-sizing: border-box;
+        text-align: center;
+        display: inline-block;
+        height: 0.38rem;
+        line-height: 0.38rem;
+        padding: 0.06rem 0.12rem;
+        font-size: 0;
+        background: rgba(255, 255, 255, 1);
+        border-radius: 0.19rem;
+    }
+
+    .icon-rank {
+        display: inline-block;
+        vertical-align: top;
+        width: 0.30rem;
+        height: 0.25rem;
+        background: url("./img/icon_vip.jpg") center no-repeat;
+        background-size: contain;
+    }
+
+    .rank-txt {
+        display: inline-block;
+        vertical-align: top;
+        margin-left: 0.07rem;
+        font-size: 0.18rem;
+        font-weight: 400;
+        color: rgba(41, 41, 41, 1);
+    }
+
+    .rank-wrapper {
+        position: relative;
+        background-color: #fff;
+    }
+
+    .rank-wrapper::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: -0.03rem;
+        width: 100%;
+        box-shadow: 0 0 0.1rem 0.01rem rgba(0, 0, 0, 0.35);
+    }
+
+    .divider {
+        display: inline-block;
+        margin-left: 0.45rem;
+        margin-right: 0.17rem;
+        margin-top: 0.52rem;
+        width: 0.08rem;
+        height: 0.34rem;
+        background: rgba(51, 128, 255, 1);
+        border-radius: 0.04rem;
+    }
+
+    .divider-label {
+        display: inline-block;
+        font-size: 0.32rem;
+        font-weight: 400;
+        color: rgba(41, 41, 41, 1);
+        line-height: 0.47rem;
+    }
+
+    .rank-block {
+        margin: 0.36rem;
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .rank-item {
+        width: 33.33333%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.62rem;
+    }
+
+    .rank-item .rank-icon {
+        width: 1.33rem;
+        height: 1.34rem;
+    }
+
+    .rank-item .rank-title {
+        font-size: 0.34rem;
+        font-weight: 500;
+        color: rgba(41, 41, 41, 1);
+        line-height: 0.47rem;
+    }
+
+    .rank-item .rank-desc {
+        font-size: 0.24rem;
+        font-weight: 400;
+        color: rgba(102, 102, 102, 1);
+        line-height: 0.47rem;
+    }
+
+    .rank-detail {
+        margin-top: 0.2rem;
+        padding-bottom: 1px;
+        margin-bottom: 0.08rem;
+        background-color: #fff;
+    }
+
+    .rank-detail .rank-table {
+        margin: 0 auto;
+        margin-top: 0.4rem;
+        width: 6.92rem;
+        border-collapse: collapse;
+    }
+
+    .rank-detail .rank-table tr,
+    .rank-detail .rank-table td {
+        border: 1px solid rgba(240, 240, 240, 1);
+    }
+
+    .rank-detail .rank-table th {
+        border: 1px solid rgba(240, 240, 240, 1);
+        font-size: 0.32rem;
+        font-weight: 400;
+        color: rgba(41, 41, 41, 1);
+        line-height: 0.47rem;
+    }
+
+    .txt-center {
+        text-align: center;
+    }
+
+    .rank-detail .rank-table ul {
+        font-size: 0.23rem;
+        font-weight: 400;
+        color: rgba(41, 41, 41, 1);
+        line-height: 0.42rem;
+    }
+
+    .rank-detail .rank-table ul li {
+        position: relative;
+        margin-left: 0.1rem;
+    }
+
+    .rank-detail .rank-table ul li::before {
+        content: "";
+        position: absolute;
+        left: -0.08rem;
+        top: 0.16rem;
+        width: 0.06rem;
+        height: 0.06rem;
+        background: rgba(0, 0, 0, 1);
+        border-radius: 50%;
+    }
+
+    .rank-detail .rank-table .open-btn {
+        margin-top: 0.22rem;
+        margin-left: 0.1rem;
+        margin-right: 0.1rem;
+        width: 1.50rem;
+        height: 0.56rem;
+        line-height: 0.56rem;
+        background: rgba(51, 128, 255, 1);
+        border-radius: 0.28rem;
+
+        text-align: center;
+        font-size: 0.26rem;
+        font-weight: 400;
+        color: rgba(255, 255, 255, 1);
+    }
+
+    .rank-detail .rank-table .position {
+        text-align: center;
+        font-size: 0.28rem;
+        font-weight: 400;
+        color: rgba(41, 41, 41, 1);
+        line-height: 0.30rem;
+        width: 0.8rem;
+    }
+
+    .rank-detail .rank-table .price {
+        font-size: 0.32rem;
+        font-weight: 400;
+        color: rgba(41, 41, 41, 1);
+        line-height: 0.42rem;
+    }
+
+    .rank-detail .rank-table .gift {
+        font-size: 0.24rem;
+        font-weight: 400;
+        color: rgba(102, 102, 102, 1);
+        line-height: 0.42rem;
+    }
+</style>
+
+<body>
+    <div id="app" class="container">
+        <div class="user-container">
+            <div class="user-info">
+                <div class="avatar">
+
+                </div>
+                <div class="user-wrapper">
+                    <div class="nickname">
+                        风口浪尖的猪
+                    </div>
+                    <div class="rank">
+                        <div class="icon-rank"></div>
+                        <div class="rank-txt">高级VIP</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="rank-wrapper">
+            <div class="divider"></div>
+            <div class="divider-label">等级特权</div>
+            <div class="rank-block">
+                <div class="rank-item" v-for="item in data">
+                    <img class="rank-icon" :src="item.icon_active" />
+                    <div class="rank-title" v-text="item.title"></div>
+                    <div class="rank-desc" v-text="item.desc"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="rank-detail">
+            <div class="divider"></div>
+            <div class="divider-label">等级说明</div>
+
+            <table class="rank-table">
+                <thead>
+                    <tr>
+                        <th>等级</th>
+                        <th>特权</th>
+                        <th>价格</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="item in list">
+                        <td class="position" v-text="item.rank"></td>
+                        <td>
+                            <ul>
+                                <li v-for="subitem in item.privilege" v-text="subitem"></li>
+                            </ul>
+                        </td>
+                        <td class="txt-center">
+                            <div class="price" v-if="item.price" v-text="item.price"></div>
+                            <div class="gift" v-if="item.gift" v-text="item.gift"></div>
+                            <div class="open-btn" v-if="item.price">立即开通</div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="./js/vue.min.js"></script>
+    <script>
+        new Vue({
+            el: "#app",
+            data: function () {
+                return {
+                    data: [
+                        {
+                            id: "1",
+                            icon_normal: "./img/icon_read.png",
+                            icon_active: "./img/icon_read_active.png",
+                            title: "300%",
+                            desc: "好友阅读进贡"
+                        },
+                        {
+                            id: "2",
+                            icon_normal: "./img/icon_red.png",
+                            icon_active: "./img/icon_red_active.png",
+                            title: "50000金币",
+                            desc: "每日红包奖励"
+                        },
+                        {
+                            id: "3",
+                            icon_normal: "./img/icon_push.png",
+                            icon_active: "./img/icon_push_active.png",
+                            title: "无上限",
+                            desc: "推广奖金"
+                        },
+                        {
+                            id: "4",
+                            icon_normal: "./img/icon_tel.png",
+                            icon_active: "./img/icon_tel_active.png",
+                            title: "80%",
+                            desc: "话费充值特权"
+                        },
+                        {
+                            id: "5",
+                            icon_normal: "./img/icon_auto.png",
+                            icon_active: "./img/icon_auto_active.png",
+                            title: "暴涨400%",
+                            desc: "全自动挖矿"
+                        },
+                        {
+                            id: "6",
+                            icon_normal: "./img/icon_bonus.png",
+                            icon_active: "./img/icon_bonus_active.png",
+                            title: "无上限",
+                            desc: "管理奖金"
+                        },
+                    ],
+                    list: [
+                        {
+                            rank: "推广总监",
+                            privilege: [
+                                "每天50000金币红包奖励，签到即得；300%徒弟阅读进贡，40%徒孙阅读进贡",
+                                "设备挂机自动挖矿，阅读金币暴涨400%",
+                                "直推一级会员奖励20元，一级推二级，也奖励你20元，直推50人以后，额外奖励三级每个10元",
+                                "管理奖金：一级、二级内任一用户升级会员，即可获得升级金额3%的收益",
+                                "充值特权：8折话费充值特权"
+                            ],
+                            price: "9888元",
+                            gift: "送高级矿机"
+                        },
+                        {
+                            rank: "推广经理",
+                            privilege: [
+                                "每天30000金币红包奖励，签到即得；200%徒弟阅读进贡，30%徒孙阅读进贡",
+                                "设备挂机自动挖矿，阅读金币暴涨300%",
+                                "直推一级会员奖励15元，一级推二级，也奖励你15元，直推50人以后，额外奖励三级每个8元",
+                                "管理奖金：一级、二级内任一用户升级会员，即可获得升级金额2%的收益",
+                                "充值特权：85折话费充值特权"
+                            ],
+                            price: "6888元",
+                            gift: "送中级矿机"
+                        },
+                        {
+                            rank: "高级VIP",
+                            privilege: [
+                                "每天15000金币红包奖励，签到即得；100%徒弟阅读进贡，20%徒孙阅读进贡",
+                                "直推一级会员奖励8元，一级推二级，也奖励你8元，直推50人以后，额外奖励三级每个5元",
+                                "管理奖金：一级、二级内任一会员升级，即可获得升级的1%收益",
+                                "充值特权：9折话费充值特权"
+                            ],
+                            price: "999元",
+                            gift: ""
+                        },
+                        {
+                            rank: "初级VIP",
+                            privilege: [
+                                "每天10000金币红包奖励，签到即得；50%徒弟阅读进贡，10%徒孙阅读进贡",
+                                "直推一级会员奖励6元，一级推二级，也奖励你6元，直推50人以后，额外奖励三级每个3元",
+                                "充值特权：95折话费充值特权"
+                            ],
+                            price: "199元",
+                            gift: ""
+                        },
+                        {
+                            rank: "普通用户",
+                            privilege: [
+                                "各类任务，轻松赚金币",
+                                "30%徒弟阅读进贡"
+                            ],
+                            price: "",
+                            gift: ""
+                        },
+                    ]
+                }
+            },
+            methods: {
+
+            }
+        })
+    </script>
+</body>
+
+</html>

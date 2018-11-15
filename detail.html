@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>选择支付方式</title>
+    <script>
+        (function (doc, win) {
+            var docEl = doc.documentElement,//设备宽度
+                rem = 100, //1rem代表100px
+                desW = 750, //设计稿宽度
+                resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+                recalc = function () {
+                    var clientWidth = docEl.clientWidth;
+                    if (!clientWidth) return;
+                    if (clientWidth >= desW) {
+                        docEl.style.fontSize = rem + "px";
+                    } else {
+                        docEl.style.fontSize = rem * (clientWidth / desW) + 'px';
+                    }
+                };
+
+            if (!doc.addEventListener) return;
+            win.addEventListener(resizeEvt, recalc, false);
+            doc.addEventListener('DOMContentLoaded', recalc, false);
+        })(document, window);
+    </script>
+</head>
+<style>
+    @media (min-width: 320px) {
+        html {
+            font-size: 42.6667px;
+        }
+    }
+
+    @media (min-width: 360px) {
+        html {
+            font-size: 48px;
+        }
+    }
+
+    @media (min-width: 375px) {
+        html {
+            font-size: 50px;
+        }
+    }
+
+    @media (min-width: 384px) {
+        html {
+            font-size: 51.2px;
+        }
+    }
+
+    @media (min-width: 414px) {
+        html {
+            font-size: 55.2px;
+        }
+    }
+
+    @media (min-width: 448px) {
+        html {
+            font-size: 59.7333px;
+        }
+    }
+
+    @media (min-width: 480px) {
+        html {
+            font-size: 48px;
+        }
+    }
+
+    @media (min-width: 512px) {
+        html {
+            font-size: 68.2667px;
+        }
+    }
+
+    @media (min-width: 544px) {
+        html {
+            font-size: 72.5333px;
+        }
+    }
+
+    @media (min-width: 576px) {
+        html {
+            font-size: 76.8px;
+        }
+    }
+
+    @media (min-width: 608px) {
+        html {
+            font-size: 81.0667px;
+        }
+    }
+
+    @media (min-width: 640px) {
+        html {
+            font-size: 85.3333px;
+        }
+    }
+
+    @media (min-width: 750px) {
+        html {
+            font-size: 100px;
+        }
+    }
+
+    html,
+    body {
+        height: 100%;
+    }
+
+    body {
+        font-size: 14px;
+        margin: 0;
+        padding: 0;
+        background-size: 100%;
+    }
+
+    ul,
+    li {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .container {
+        margin: 0 auto;
+    }
+
+    .pay-panel {
+        width: 100%;
+        background-color: #fff;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        z-index: 999;
+        display: none;
+    }
+
+    .pay-panel .title {
+        padding: 0.25rem 0;
+        padding-left: 0.25rem;
+        color: rgb(168, 168, 168);
+        background-color: rgb(247, 247, 247);
+    }
+
+    .float-btn {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: 1.3rem;
+        line-height: 1.3rem;
+        text-align: center;
+        color: #fff;
+        background: rgba(51, 128, 255, 1);
+    }
+
+    .mask {
+        background-color: rgba(0, 0, 0, 0.2);
+        position: fixed;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        width: 100%;
+    }
+
+    .pay-item {
+        padding: 0.2rem 0;
+
+    }
+
+    .pay-item .icon {
+        margin-left: 0.25rem;
+        width: 0.75rem;
+        height: 0.75rem;
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: contain;
+    }
+
+    .pay-item .icon.icon-alipay {
+        background-image: url("./img/alipay.png");
+    }
+
+    .pay-item .pay-desc {
+        width: 6.15rem;
+        border-bottom: 1px solid #eee;
+    }
+
+    .pay-item.wechat div.pay-desc {
+        border-bottom: none;
+    }
+
+    .pay-item .pay-desc div.pay-txt {
+        margin-bottom: 0.2rem;
+    }
+
+    .pay-item .pay-desc div.character {
+        margin-bottom: 0.2rem;
+    }
+
+    .pay-item .icon.icon-wechat {
+        background-image: url("./img/wechat.png");
+    }
+
+    .pay-item .icon,
+    .pay-item .pay-desc {
+        display: inline-block;
+    }
+
+    .recommand {
+        position: relative;
+        display: inline-block;
+    }
+
+    .recommand::after {
+        content: "推荐";
+        color: #fff;
+        position: absolute;
+        right: -1.2rem;
+        top: 30%;
+        padding: 0 0.07rem;
+        height: 0.5rem;
+        line-height: 0.5rem;
+        background-color: rgb(251, 109, 82);
+        display: inline-block;
+    }
+</style>
+
+<body>
+    <div class="container">
+
+    </div>
+    <div class="pay-panel" id="payPanel">
+        <div class="title">
+            请选择支付方式
+        </div>
+        <div class="pay-item alipay">
+            <div class="icon icon-alipay"></div>
+            <div class="pay-desc">
+                <div class="recommand">
+                    <div class="pay-txt">
+                        支付宝支付
+                    </div>
+                    <div class="character">
+                        支付宝付款更快更安全
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="pay-item wechat">
+            <div class="icon icon-wechat"></div>
+            <div class="pay-desc">
+                <div class="pay-txt">
+                    微信支付
+                </div>
+                <div class="character">
+                    安全快捷
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mask" id="mask"></div>
+    <div class="float-btn" id="openBtn">
+        立即开通
+    </div>
+
+    <script>
+        var isVip = true;
+        var payPanel = document.getElementById("payPanel");
+        var mask = document.getElementById("mask");
+        document.getElementById("openBtn").addEventListener("click", function () {
+            if (isVip) {
+                window.location.href = "./order.html";
+            } else {
+                payPanel.style.display = "block";
+                mask.style.display = "block";
+            }
+        })
+
+        mask.addEventListener("click", function () {
+            this.style.display = "none";
+            payPanel.style.display = "none";
+        })
+    </script>
+</body>
+
+</html>
