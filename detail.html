@@ -106,7 +106,25 @@
             font-size: 100px;
         }
     }
-
+    *{
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    }
+    html{
+        -webkit-text-size-adjust: 100%;
+        -ms-text-size-adjust: 100%;
+        /* 解决IOS默认滑动很卡的情况 */
+        -webkit-overflow-scrolling : touch;
+        -webkit-touch-callout:none;
+    }
+    input[type="submit"], input[type="reset"], input[type="button"], input {
+        resize: none;
+        border: none;
+    }
+    input,
+    button {
+        -webkit-appearance: none;
+        border-radius: 0;
+    }
     html,
     body {
         height: 100%;
