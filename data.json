@@ -1,0 +1,56 @@
+{
+	"user":{
+	    "err_code": 0,
+	    "user": {
+	        "id": 1,
+	        "app_id": 1,
+	        "os_type": 1,
+	        "mobile": null,
+	        "union_id": "o93an1JcG2LWtP1KH3qB_QAbs36w",
+	        "open_id": "oZVF91eKzlw38_PimYCSMc581MTc",
+	        "invite_code": 2180144,
+	        "alipay": "",
+	        "token": "1|zbBSGTHEpFZXAS80S7hcOtk+j2Q=",
+	        "newbie": false,
+	        "nickname": "刘晨",
+	        "realname": "",
+	        "avatar": "http://thirdwx.qlogo.cn/mmopen/vi_32/DYAIOgq83ep9jEYiarJdRBzkBGvzAybSv8BEsYAvYweNjYTic2KjadYJ5s5bfcKGlzfib28IZB3ia4GNUtQbXlMibibQ/132",
+	        "gender": 1,
+	        "email": "",
+	        "disabled": false,
+	        "balance": 50,
+	        "withdraw": 0,
+	        "coin": 0,
+	        "contribute_coin": 0,
+	        "parent_id": 0,
+	        "parent_parent_id": 0,
+	        "son_count": 0,
+	        "son_son_count": 0,
+	        "daily_news_coin": 0,
+	        "daily_video_coin": 0,
+	        "daily_prentice_coin": 0,
+	        "checkIn_days": 0,
+	        "withdraw_coin": 0,
+	        "withdraw_contributed": false,
+	        "created_ip": "111.172.29.97",
+	        "last_check_in": "2018-12-14T21:11:45+08:00",
+	        "device_id": "864460035277954",
+	        "created_at": "2018-12-14T21:11:45+08:00",
+	        "updated_at": "2018-12-15T00:10:00+08:00",
+	        "tqk_count": 0,
+	        "channel": "",
+	        "level": 0,
+	        "vip_son_count": 0
+	    }
+	},
+
+	"order":{
+	    "err_code": 0,
+	    "pay_url": "https://mclient.alipay.com/cashier/mobilepay.htm?alipay_exterface_invoke_assign_target=invoke_8f351be35282e195df413474739c1037&alipay_exterface_invoke_assign_sign=_ucojwgx_o05c_iw%2B92_lviaja_lq7_v_i%2Byg%2B_u_lnn65e8_xw_fa_p_hfn_t_t_sceiw%3D%3D"
+	}
+}
+
+
+
+
+

@@ -27,6 +27,8 @@
             doc.addEventListener('DOMContentLoaded', recalc, false);
         })(document, window);
     </script>
+    <script src="./js/axios.min.js"></script>
+    <script src="./js/vue.min.js"></script>
 </head>
 <style>
     @media (min-width: 320px) {
@@ -109,6 +111,9 @@
     *{
         -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     }
+    [v-cloak] {
+      display: none;
+    }
     html{
         -webkit-text-size-adjust: 100%;
         -ms-text-size-adjust: 100%;
@@ -161,6 +166,12 @@
         background-size: contain;
         margin-left: 0.35rem;
         margin-top: 0.37rem;
+    }
+    .avatar .avatar-img{
+        display: block;
+        width: 0.9rem;
+        height: 0.9rem;
+        border-radius: 50%;
     }
 
     .user-container {
@@ -370,22 +381,29 @@
         color: rgba(102, 102, 102, 1);
         line-height: 0.42rem;
     }
+    .rank-detail .open-btn.disabled{
+        background-color: #ccc;
+    }
 </style>
 
 <body>
-    <div id="app" class="container">
+    <div id="app" v-cloak class="container">
         <div class="user-container">
             <div class="user-info">
                 <div class="avatar">
-
+                    <img class="avatar-img" :src="user.avatar">
                 </div>
                 <div class="user-wrapper">
-                    <div class="nickname">
-                        风口浪尖的猪
+                    <div class="nickname" v-html="user.nickname">
+                        
                     </div>
                     <div class="rank">
-                        <div class="icon-rank"></div>
-                        <div class="rank-txt">高级VIP</div>
+                        <div v-if="user.level>0" class="icon-rank"></div>
+                        <div v-if="user.level==0" class="rank-txt">普通用户</div>
+                        <div v-if="user.level==1" class="rank-txt">普通VIP</div>
+                        <div v-if="user.level==2" class="rank-txt">高级VIP</div>
+                        <div v-if="user.level==3" class="rank-txt">经理</div>
+                        <div v-if="user.level==4" class="rank-txt">总监</div>
                     </div>
                 </div>
             </div>
@@ -396,8 +414,10 @@
             <div class="divider-label">等级特权</div>
             <div class="rank-block">
                 <div class="rank-item" v-for="item in data">
-                    <img class="rank-icon" :src="item.icon_active" />
-                    <div class="rank-title" v-text="item.title"></div>
+                    <img class="rank-icon" v-if="item.privilege[user.level]" :src="item.icon_active" />
+                    <img class="rank-icon" v-else :src="item.icon_normal" />
+
+                    <div class="rank-title" v-text="item.privilege[user.level]==''?item.privilege[item.privilege.length-1]:item.privilege[user.level]"></div>
                     <div class="rank-desc" v-text="item.desc"></div>
                 </div>
             </div>
@@ -426,7 +446,8 @@
                         <td class="txt-center">
                             <div class="price" v-if="item.price" v-text="item.price"></div>
                             <div class="gift" v-if="item.gift" v-text="item.gift"></div>
-                            <div class="open-btn" v-if="item.price">立即开通</div>
+                            <div class="open-btn" v-if="item.price&&(user.level<item.level)" @click="openMember(true)">立即开通</div>
+                            <div class="open-btn disabled" v-if="item.price&&(user.level>=item.level)" @click="openMember(false)">立即开通</div>
                         </td>
                     </tr>
                 </tbody>
@@ -434,116 +455,172 @@
         </div>
     </div>
 
-    <script src="./js/vue.min.js"></script>
+    <script src="./js/show-toast.js"></script>
     <script>
-        new Vue({
+        var vm = new Vue({
             el: "#app",
-            data: function () {
-                return {
-                    data: [
-                        {
-                            id: "1",
-                            icon_normal: "./img/icon_read.png",
-                            icon_active: "./img/icon_read_active.png",
-                            title: "300%",
-                            desc: "好友阅读进贡"
-                        },
-                        {
-                            id: "2",
-                            icon_normal: "./img/icon_red.png",
-                            icon_active: "./img/icon_red_active.png",
-                            title: "50000金币",
-                            desc: "每日红包奖励"
-                        },
-                        {
-                            id: "3",
-                            icon_normal: "./img/icon_push.png",
-                            icon_active: "./img/icon_push_active.png",
-                            title: "无上限",
-                            desc: "推广奖金"
-                        },
-                        {
-                            id: "4",
-                            icon_normal: "./img/icon_tel.png",
-                            icon_active: "./img/icon_tel_active.png",
-                            title: "80%",
-                            desc: "话费充值特权"
-                        },
-                        {
-                            id: "5",
-                            icon_normal: "./img/icon_auto.png",
-                            icon_active: "./img/icon_auto_active.png",
-                            title: "暴涨400%",
-                            desc: "全自动挖矿"
-                        },
-                        {
-                            id: "6",
-                            icon_normal: "./img/icon_bonus.png",
-                            icon_active: "./img/icon_bonus_active.png",
-                            title: "无上限",
-                            desc: "管理奖金"
-                        },
-                    ],
-                    list: [
-                        {
-                            rank: "推广总监",
-                            privilege: [
-                                "每天50000金币红包奖励，签到即得；300%徒弟阅读进贡，40%徒孙阅读进贡",
-                                "设备挂机自动挖矿，阅读金币暴涨400%",
-                                "直推一级会员奖励20元，一级推二级，也奖励你20元，直推50人以后，额外奖励三级每个10元",
-                                "管理奖金：一级、二级内任一用户升级会员，即可获得升级金额3%的收益",
-                                "充值特权：8折话费充值特权"
-                            ],
-                            price: "9888元",
-                            gift: "送高级矿机"
-                        },
-                        {
-                            rank: "推广经理",
-                            privilege: [
-                                "每天30000金币红包奖励，签到即得；200%徒弟阅读进贡，30%徒孙阅读进贡",
-                                "设备挂机自动挖矿，阅读金币暴涨300%",
-                                "直推一级会员奖励15元，一级推二级，也奖励你15元，直推50人以后，额外奖励三级每个8元",
-                                "管理奖金：一级、二级内任一用户升级会员，即可获得升级金额2%的收益",
-                                "充值特权：85折话费充值特权"
-                            ],
-                            price: "6888元",
-                            gift: "送中级矿机"
-                        },
-                        {
-                            rank: "高级VIP",
-                            privilege: [
-                                "每天15000金币红包奖励，签到即得；100%徒弟阅读进贡，20%徒孙阅读进贡",
-                                "直推一级会员奖励8元，一级推二级，也奖励你8元，直推50人以后，额外奖励三级每个5元",
-                                "管理奖金：一级、二级内任一会员升级，即可获得升级的1%收益",
-                                "充值特权：9折话费充值特权"
-                            ],
-                            price: "999元",
-                            gift: ""
-                        },
-                        {
-                            rank: "初级VIP",
-                            privilege: [
-                                "每天10000金币红包奖励，签到即得；50%徒弟阅读进贡，10%徒孙阅读进贡",
-                                "直推一级会员奖励6元，一级推二级，也奖励你6元，直推50人以后，额外奖励三级每个3元",
-                                "充值特权：95折话费充值特权"
-                            ],
-                            price: "199元",
-                            gift: ""
-                        },
-                        {
-                            rank: "普通用户",
-                            privilege: [
-                                "各类任务，轻松赚金币",
-                                "30%徒弟阅读进贡"
-                            ],
-                            price: "",
-                            gift: ""
-                        },
-                    ]
-                }
+            data:  {
+                user:{},
+                data: [
+                    {
+                        icon_normal: "./img/icon_read.png",
+                        icon_active: "./img/icon_read_active.png",
+                        privilege: [
+                            "30%",
+                            "10%",
+                            "20%",
+                            "30%",
+                            "40%",
+                        ],
+                        desc: "好友阅读进贡"
+                    },
+                    {
+                        icon_normal: "./img/icon_red.png",
+                        icon_active: "./img/icon_red_active.png",
+                        privilege: [
+                            "",
+                            "10000金币",
+                            "15000金币",
+                            "30000金币",
+                            "50000金币",
+                        ],
+                        desc: "每日红包奖励"
+                    },
+                    {
+                        icon_normal: "./img/icon_push.png",
+                        icon_active: "./img/icon_push_active.png",
+                        privilege: [
+                            "无上限",
+                            "无上限",
+                            "无上限",
+                            "无上限",
+                            "无上限",
+                        ],
+                        desc: "推广奖金"
+                    },
+                    {
+                        icon_normal: "./img/icon_bonus.png",
+                        icon_active: "./img/icon_bonus_active.png",
+                        privilege: [
+                            "",
+                            "",
+                            "1%",
+                            "2%",
+                            "3%",
+                        ],
+                        desc: "管理奖金"
+                    },
+                    {
+                        icon_normal: "./img/icon_tel.png",
+                        icon_active: "./img/icon_tel_active.png",
+                        privilege: [
+                            "",
+                            "95%",
+                            "90%",
+                            "85%",
+                            "80%",
+                        ],
+                        desc: "话费充值特权"
+                    },
+                    {
+                        icon_normal: "./img/icon_auto.png",
+                        icon_active: "./img/icon_auto_active.png",
+                        privilege: [
+                            "",
+                            "",
+                            "",
+                            "暴涨300%",
+                            "暴涨400%",
+                        ],
+                        desc: "全自动挖矿"
+                    }
+                ],
+                list: [
+                    {
+                        level:4,
+                        rank: "推广总监",
+                        privilege: [
+                            "每天50000金币红包奖励，签到即得；300%徒弟阅读进贡，40%徒孙阅读进贡",
+                            "设备挂机自动挖矿，阅读金币暴涨400%",
+                            "直推一级会员奖励20元，一级推二级，也奖励你20元，直推50人以后，额外奖励三级每个10元",
+                            "管理奖金：一级、二级内任一用户升级会员，即可获得升级金额3%的收益",
+                            "充值特权：8折话费充值特权"
+                        ],
+                        price: "9888元",
+                        gift: "送高级矿机"
+                    },
+                    {
+                        level:3,
+                        rank: "推广经理",
+                        privilege: [
+                            "每天30000金币红包奖励，签到即得；200%徒弟阅读进贡，30%徒孙阅读进贡",
+                            "设备挂机自动挖矿，阅读金币暴涨300%",
+                            "直推一级会员奖励15元，一级推二级，也奖励你15元，直推50人以后，额外奖励三级每个8元",
+                            "管理奖金：一级、二级内任一用户升级会员，即可获得升级金额2%的收益",
+                            "充值特权：85折话费充值特权"
+                        ],
+                        price: "6888元",
+                        gift: "送中级矿机"
+                    },
+                    {
+                        level:2,
+                        rank: "高级VIP",
+                        privilege: [
+                            "每天15000金币红包奖励，签到即得；100%徒弟阅读进贡，20%徒孙阅读进贡",
+                            "直推一级会员奖励8元，一级推二级，也奖励你8元，直推50人以后，额外奖励三级每个5元",
+                            "管理奖金：一级、二级内任一会员升级，即可获得升级的1%收益",
+                            "充值特权：9折话费充值特权"
+                        ],
+                        price: "999元",
+                        gift: ""
+                    },
+                    {
+                        level:1,
+                        rank: "初级VIP",
+                        privilege: [
+                            "每天10000金币红包奖励，签到即得；50%徒弟阅读进贡，10%徒孙阅读进贡",
+                            "直推一级会员奖励6元，一级推二级，也奖励你6元，直推50人以后，额外奖励三级每个3元",
+                            "充值特权：95折话费充值特权"
+                        ],
+                        price: "199元",
+                        gift: ""
+                    },
+                    {
+                        level:0,
+                        rank: "普通用户",
+                        privilege: [
+                            "各类任务，轻松赚金币",
+                            "30%徒弟阅读进贡"
+                        ],
+                        price: "",
+                        gift: ""
+                    },
+                ]
+            },
+            created:function(){
+                this.getData();
             },
             methods: {
+                getData:function(){
+                    var _this=this;
+                    axios.get("http://localhost:3000/user")
+                    .then(function(res){
+                        console.log(res.data);
+                        if(res&&res.data.err_code==0){
+                            console.log(_this)
+                            _this.user=res.data.user;
+                        }
+                    })
+                },
+                openMember:function(res){
+                    console.log(res);
+                    if(!res){
+                        showToast('开通会员不能比当前会员等级低');
+                        return false;
+                    }
 
+                    window.location.href="./order.html"
+                }
             }
         })
     </script>
