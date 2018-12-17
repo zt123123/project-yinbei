@@ -258,7 +258,7 @@
                     <div class="gift">赠送高级矿机</div>
                     <div class="price">¥9998</div>
                 </div>
-                <div class="open-btn">
+                <div class="open-btn" price="9998" level="4">
                     立即开通
                 </div>
             </div>
@@ -269,7 +269,7 @@
                     <div class="gift">赠送中级矿机</div>
                     <div class="price">¥6888</div>
                 </div>
-                <div class="open-btn">
+                <div class="open-btn" price="6888" level="3">
                     立即开通
                 </div>
             </div>
@@ -279,7 +279,7 @@
                     <div class="position">高级VIP</div>
                     <div class="price">¥999</div>
                 </div>
-                <div class="open-btn">
+                <div class="open-btn" price="999" level="2">
                     立即开通
                 </div>
             </div>
@@ -289,7 +289,7 @@
                     <div class="position">初级VIP</div>
                     <div class="price">¥199</div>
                 </div>
-                <div class="open-btn">
+                <div class="open-btn" price="199" level="1">
                     立即开通
                 </div>
             </div>
@@ -298,11 +298,14 @@
 
     <script>
         var btn = document.getElementsByClassName("open-btn")
-
+        var price="";
+        var level=0;
 
         for (var i = 0; i < btn.length; i++) {
             btn[i].addEventListener("click", function () {
-                window.location.href = "./detail.html"
+                price=this.getAttribute("price");
+                level=this.getAttribute("level");
+                window.location.href = "./detail.html?level="+level+"&price="+price;
             })
         }
 

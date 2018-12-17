@@ -433,9 +433,9 @@
                 </div>
             </div>
             <div class="product-detail">
-                <div class="product-price"><span class="label">商品金额</span><span class="content">¥9998</span></div>
-                <div class="product-discount"><span class="label">优惠</span><span class="content">-¥200</span></div>
-                <div class="order-price"><span class="label">订单金额</span><span class="content">¥9797</span></div>
+                <div class="product-price"><span class="label">商品金额</span><span class="content">¥<span id="price">9998</span></span></div>
+                <div class="product-discount"><span class="label">优惠</span><span class="content">-¥<span id="discount">200</span></span></div>
+                <div class="order-price"><span class="label">订单金额</span><span class="content">¥<span id="realPrice">9797</span></span></div>
             </div>
         </div>
         <div class="pay-panel">
@@ -446,12 +446,12 @@
                 <div id="wechatPay" class="wechat-wrapper">
                     <div class="choose-item wechat active"></div>
                     <div class="icon wechat-icon"></div>
-                    <div class="pay-text">微信支付</div>
+                    <div class="pay-text" type="1">微信支付</div>
                 </div>
                 <div id="alipay" class="alipay-wrapper">
                     <div class="choose-item alipay"></div>
                     <div class="icon alipay-icon"></div>
-                    <div class="pay-text">支付宝支付</div>
+                    <div class="pay-text" type="0">支付宝支付</div>
                 </div>
             </div>
         </div>
@@ -469,6 +469,29 @@
     <script src="./js/show-toast.js"></script>
     <script src="./js/city.js" charset="utf-8"></script>
     <script>
+        function getParamName(name) {
+          var url = location.search; //获取url中"?"符后的字串
+          var theRequest = new Object();
+          if (url.indexOf("?") != -1) {
+            var str = url.substr(1);
+            strs = str.split("&");
+            for (var i = 0; i < strs.length; i++) {
+              theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+            }
+          }
+          return theRequest[name]
+        }
+
+        (function(){
+            $("#price").html(getParamName("price"));
+
+            var price=parseInt($("#price").html());
+            var discount=parseInt($("#discount").html());
+            
+            $("#realPrice").html(price-discount);
+        })()
+
+
         //change tab
         $("#wechatPay").on("click", function () {
             $(this).children(".choose-item").addClass("active");
@@ -635,15 +658,23 @@
             console.log("ajax");
 
             $.ajax({
-                url: "/",
-                method: "post",
+                url: "http://inbbb.net/yb/new/order",
+                method: "GET",
                 data: {
-                    receiver: receiver.value,
-                    phone: phone.value,
-                    cityPicker: cityPicker.value,
-                    address: address.value,
-                    poster: poster.value,
-                    payWay: $(".choose-item.active").siblings().eq(1).html()
+                    level:getParamName("level"),
+                    pay_type:$(".choose-item.active").siblings().eq(1).attr("type"),
+                    recipient:receiver.value,
+                    mobile:phone.value,
+                    address:cityPicker.value+address.value,
+                    token:"1|zbBSGTHEpFZXAS80S7hcOtk+j2Q=",
+                    return_url:"http://www.baidu.com",
+
+                    // receiver: receiver.value,
+                    // phone: phone.value,
+                    // cityPicker: cityPicker.value,
+                    // address: address.value,
+                    // poster: poster.value,
+                    // payWay: $(".choose-item.active").siblings().eq(1).html()
                 }
             })
         }

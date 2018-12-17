@@ -448,8 +448,8 @@
                         <td class="txt-center">
                             <div class="price" v-if="item.price" v-text="item.price"></div>
                             <div class="gift" v-if="item.gift" v-text="item.gift"></div>
-                            <div class="open-btn" v-if="item.price&&(user.level<item.level)" @click="openMember(true)">立即开通</div>
-                            <div class="open-btn disabled" v-if="item.price&&(user.level>=item.level)" @click="openMember(false)">立即开通</div>
+                            <div class="open-btn" v-if="item.price&&(user.level<item.level)" @click="openMember(true,item.price,item.level)">立即开通</div>
+                            <div class="open-btn disabled" v-if="item.price&&(user.level>=item.level)" @click="openMember(false,item.price,item.level)">立即开通</div>
                         </td>
                     </tr>
                 </tbody>
@@ -602,10 +602,11 @@
                 ]
             },
             created:function(){
-                
+                this.getToken();
+                this.getData();
             },
             mounted:function(){
-				this.getData();
+				
             },
             methods: {
             	getToken:function(){
@@ -618,6 +619,7 @@
             			if (window.android && typeof (window.android.getToken) == "function") {
             			    var token = window.android.getToken();
             			    this.token=token;
+                            this.getData();
             			} else {
             			    alert("没有android.getInviteCode方法");
             			}
@@ -641,14 +643,14 @@
                         }
                     })
                 },
-                openMember:function(res){
+                openMember:function(res,price,level){
                     console.log(res);
                     if(!res){
                         showToast('开通会员不能比当前会员等级低');
                         return false;
                     }
 
-                    window.location.href="./order.html"
+                    window.location.href="./order.html?level="+level+"&price="+parseInt(price);
                 }
             }
         })
