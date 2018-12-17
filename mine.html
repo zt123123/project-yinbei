@@ -463,6 +463,7 @@
             el: "#app",
             data:  {
                 user:{},
+                api:"http://inbbb.net/yb/user/detail?token=",
                 data: [
                     {
                         icon_normal: "./img/icon_read.png",
@@ -594,17 +595,43 @@
                             "各类任务，轻松赚金币",
                             "30%徒弟阅读进贡"
                         ],
+                        token:"",
                         price: "",
                         gift: ""
                     },
                 ]
             },
             created:function(){
-                this.getData();
+                
+            },
+            mounted:function(){
+				this.getData();
             },
             methods: {
+            	getToken:function(){
+            		var u = navigator.userAgent, app = navigator.appVersion;
+            		var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
+            		var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+            		var flag=window.webkit && window.webkit.messageHandlers
+            		
+            		if(isAndroid){
+            			if (window.android && typeof (window.android.getToken) == "function") {
+            			    var token = window.android.getToken();
+            			    this.token=token;
+            			} else {
+            			    alert("没有android.getInviteCode方法");
+            			}
+            		}
+
+            		if(isiOS&&flag){
+            		    console.log(code.innerText);
+            		    // window.webkit.messageHandlers.getToken && window.webkit.messageHandlers.getToken.postMessage(code.innerText);
+            		    // window.webkit.messageHandlers.jump && window.webkit.messageHandlers.jump.postMessage(jumpUrl.alipay.home);
+            		}
+            	},
                 getData:function(){
                     var _this=this;
+                    // axios.get(this.api+this.token)
                     axios.get("http://localhost:3000/user")
                     .then(function(res){
                         console.log(res.data);
