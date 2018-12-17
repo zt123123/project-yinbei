@@ -29,362 +29,364 @@
     </script>
     <script src="./js/axios.min.js"></script>
     <script src="./js/vue.min.js"></script>
+    <style>
+        @media (min-width: 320px) {
+            html {
+                font-size: 42.6667px;
+            }
+        }
+
+        @media (min-width: 360px) {
+            html {
+                font-size: 48px;
+            }
+        }
+
+        @media (min-width: 375px) {
+            html {
+                font-size: 50px;
+            }
+        }
+
+        @media (min-width: 384px) {
+            html {
+                font-size: 51.2px;
+            }
+        }
+
+        @media (min-width: 414px) {
+            html {
+                font-size: 55.2px;
+            }
+        }
+
+        @media (min-width: 448px) {
+            html {
+                font-size: 59.7333px;
+            }
+        }
+
+        @media (min-width: 480px) {
+            html {
+                font-size: 48px;
+            }
+        }
+
+        @media (min-width: 512px) {
+            html {
+                font-size: 68.2667px;
+            }
+        }
+
+        @media (min-width: 544px) {
+            html {
+                font-size: 72.5333px;
+            }
+        }
+
+        @media (min-width: 576px) {
+            html {
+                font-size: 76.8px;
+            }
+        }
+
+        @media (min-width: 608px) {
+            html {
+                font-size: 81.0667px;
+            }
+        }
+
+        @media (min-width: 640px) {
+            html {
+                font-size: 85.3333px;
+            }
+        }
+
+        @media (min-width: 750px) {
+            html {
+                font-size: 100px;
+            }
+        }
+        *{
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        }
+        [v-cloak] {
+          display: none;
+        }
+        html{
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+            /* 解决IOS默认滑动很卡的情况 */
+            -webkit-overflow-scrolling : touch;
+            -webkit-touch-callout:none;
+        }
+        input[type="submit"], input[type="reset"], input[type="button"], input {
+            resize: none;
+            border: none;
+        }
+        input,
+        button {
+            -webkit-appearance: none;
+            border-radius: 0;
+        }
+        body {
+            font-size: 14px;
+            margin: 0;
+            padding: 0;
+            background-color: #F3F3F3;
+            background-size: 100%;
+        }
+
+        ul,
+        li {
+            margin: 0;
+            padding: 0;
+            list-style-type: none;
+        }
+
+        .container {
+            margin: 0 auto;
+        }
+
+        .user-info {
+            margin: 0 auto;
+            width: 6.66rem;
+            height: 1.96rem;
+            background: url("./img/mem_bg.png") center no-repeat;
+            background-size: contain;
+        }
+
+        .avatar {
+            float: left;
+            width: 0.9rem;
+            height: 0.9rem;
+            border-radius: 50%;
+            background: #fff url("./img/zongjian.png") center no-repeat;
+            background-size: contain;
+            margin-left: 0.35rem;
+            margin-top: 0.37rem;
+        }
+        .avatar .avatar-img{
+            display: block;
+            width: 0.9rem;
+            height: 0.9rem;
+            border-radius: 50%;
+        }
+
+        .user-container {
+            padding-top: 0.44rem;
+            background-color: #fff;
+        }
+
+        .user-wrapper {
+            margin-top: 0.42rem;
+            margin-left: 0.16rem;
+            float: left;
+        }
+
+        .nickname {
+            font-size: 0.32rem;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 1);
+            line-height: 0.47rem;
+        }
+
+        .rank {
+            text-align: center;
+            box-sizing: border-box;
+            text-align: center;
+            display: inline-block;
+            height: 0.38rem;
+            line-height: 0.38rem;
+            padding: 0 0.12rem;
+            font-size: 0;
+            background: rgba(255, 255, 255, 1);
+            border-radius: 0.19rem;
+        }
+
+        .icon-rank {
+            display: inline-block;
+            vertical-align: top;
+            width: 0.30rem;
+            height: 100%;
+            background: url("./img/icon_vip.jpg") center no-repeat;
+            background-size: contain;
+        }
+
+        .rank-txt {
+            display: inline-block;
+            vertical-align: top;
+            margin-left: 0.07rem;
+            font-size: 0.18rem;
+            font-weight: 400;
+            color: rgba(41, 41, 41, 1);
+        }
+
+        .rank-wrapper {
+            position: relative;
+            background-color: #fff;
+        }
+
+        .rank-wrapper::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: -0.03rem;
+            width: 100%;
+            box-shadow: 0 0 0.1rem 0.01rem rgba(0, 0, 0, 0.35);
+        }
+
+        .divider {
+            display: inline-block;
+            margin-left: 0.45rem;
+            margin-right: 0.17rem;
+            margin-top: 0.52rem;
+            width: 0.08rem;
+            height: 0.34rem;
+            background: rgba(51, 128, 255, 1);
+            border-radius: 0.04rem;
+        }
+
+        .divider-label {
+            display: inline-block;
+            font-size: 0.32rem;
+            font-weight: 400;
+            color: rgba(41, 41, 41, 1);
+            line-height: 0.47rem;
+        }
+
+        .rank-block {
+            margin: 0.36rem;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .rank-item {
+            width: 33.33333%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.62rem;
+        }
+
+        .rank-item .rank-icon {
+            width: 1.33rem;
+            height: 1.34rem;
+        }
+
+        .rank-item .rank-title {
+            font-size: 0.34rem;
+            font-weight: 500;
+            color: rgba(41, 41, 41, 1);
+            line-height: 0.47rem;
+        }
+
+        .rank-item .rank-desc {
+            font-size: 0.24rem;
+            font-weight: 400;
+            color: rgba(102, 102, 102, 1);
+            line-height: 0.47rem;
+        }
+
+        .rank-detail {
+            margin-top: 0.2rem;
+            padding-bottom: 1px;
+            margin-bottom: 0.08rem;
+            background-color: #fff;
+        }
+
+        .rank-detail .rank-table {
+            margin: 0 auto;
+            margin-top: 0.4rem;
+            width: 6.92rem;
+            border-collapse: collapse;
+        }
+
+        .rank-detail .rank-table tr,
+        .rank-detail .rank-table td {
+            border: 1px solid rgba(240, 240, 240, 1);
+        }
+
+        .rank-detail .rank-table th {
+            border: 1px solid rgba(240, 240, 240, 1);
+            font-size: 0.32rem;
+            font-weight: 400;
+            color: rgba(41, 41, 41, 1);
+            line-height: 0.47rem;
+        }
+
+        .txt-center {
+            text-align: center;
+        }
+
+        .rank-detail .rank-table ul {
+            font-size: 0.23rem;
+            font-weight: 400;
+            color: rgba(41, 41, 41, 1);
+            line-height: 0.42rem;
+        }
+
+        .rank-detail .rank-table ul li {
+            position: relative;
+            margin-left: 0.1rem;
+        }
+
+        .rank-detail .rank-table ul li::before {
+            content: "";
+            position: absolute;
+            left: -0.08rem;
+            top: 0.16rem;
+            width: 0.06rem;
+            height: 0.06rem;
+            background: rgba(0, 0, 0, 1);
+            border-radius: 50%;
+        }
+
+        .rank-detail .rank-table .open-btn {
+            margin-top: 0.22rem;
+            margin-left: 0.1rem;
+            margin-right: 0.1rem;
+            width: 1.50rem;
+            height: 0.56rem;
+            line-height: 0.56rem;
+            background: rgba(51, 128, 255, 1);
+            border-radius: 0.28rem;
+
+            text-align: center;
+            font-size: 0.26rem;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 1);
+        }
+
+        .rank-detail .rank-table .position {
+            text-align: center;
+            font-size: 0.28rem;
+            font-weight: 400;
+            color: rgba(41, 41, 41, 1);
+            line-height: 0.30rem;
+            width: 0.8rem;
+        }
+
+        .rank-detail .rank-table .price {
+            font-size: 0.32rem;
+            font-weight: 400;
+            color: rgba(41, 41, 41, 1);
+            line-height: 0.42rem;
+        }
+
+        .rank-detail .rank-table .gift {
+            font-size: 0.24rem;
+            font-weight: 400;
+            color: rgba(102, 102, 102, 1);
+            line-height: 0.42rem;
+        }
+        .rank-detail .open-btn.disabled{
+            background-color: #ccc;
+        }
+    </style>
 </head>
-<style>
-    @media (min-width: 320px) {
-        html {
-            font-size: 42.6667px;
-        }
-    }
 
-    @media (min-width: 360px) {
-        html {
-            font-size: 48px;
-        }
-    }
-
-    @media (min-width: 375px) {
-        html {
-            font-size: 50px;
-        }
-    }
-
-    @media (min-width: 384px) {
-        html {
-            font-size: 51.2px;
-        }
-    }
-
-    @media (min-width: 414px) {
-        html {
-            font-size: 55.2px;
-        }
-    }
-
-    @media (min-width: 448px) {
-        html {
-            font-size: 59.7333px;
-        }
-    }
-
-    @media (min-width: 480px) {
-        html {
-            font-size: 48px;
-        }
-    }
-
-    @media (min-width: 512px) {
-        html {
-            font-size: 68.2667px;
-        }
-    }
-
-    @media (min-width: 544px) {
-        html {
-            font-size: 72.5333px;
-        }
-    }
-
-    @media (min-width: 576px) {
-        html {
-            font-size: 76.8px;
-        }
-    }
-
-    @media (min-width: 608px) {
-        html {
-            font-size: 81.0667px;
-        }
-    }
-
-    @media (min-width: 640px) {
-        html {
-            font-size: 85.3333px;
-        }
-    }
-
-    @media (min-width: 750px) {
-        html {
-            font-size: 100px;
-        }
-    }
-    *{
-        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-    }
-    [v-cloak] {
-      display: none;
-    }
-    html{
-        -webkit-text-size-adjust: 100%;
-        -ms-text-size-adjust: 100%;
-        /* 解决IOS默认滑动很卡的情况 */
-        -webkit-overflow-scrolling : touch;
-        -webkit-touch-callout:none;
-    }
-    input[type="submit"], input[type="reset"], input[type="button"], input {
-        resize: none;
-        border: none;
-    }
-    input,
-    button {
-        -webkit-appearance: none;
-        border-radius: 0;
-    }
-    body {
-        font-size: 14px;
-        margin: 0;
-        padding: 0;
-        background-color: #F3F3F3;
-        background-size: 100%;
-    }
-
-    ul,
-    li {
-        margin: 0;
-        padding: 0;
-        list-style-type: none;
-    }
-
-    .container {
-        margin: 0 auto;
-    }
-
-    .user-info {
-        margin: 0 auto;
-        width: 6.66rem;
-        height: 1.96rem;
-        background: url("./img/mem_bg.png") center no-repeat;
-        background-size: contain;
-    }
-
-    .avatar {
-        float: left;
-        width: 0.9rem;
-        height: 0.9rem;
-        border-radius: 50%;
-        background: #fff url("./img/zongjian.png") center no-repeat;
-        background-size: contain;
-        margin-left: 0.35rem;
-        margin-top: 0.37rem;
-    }
-    .avatar .avatar-img{
-        display: block;
-        width: 0.9rem;
-        height: 0.9rem;
-        border-radius: 50%;
-    }
-
-    .user-container {
-        padding-top: 0.44rem;
-        background-color: #fff;
-    }
-
-    .user-wrapper {
-        margin-top: 0.42rem;
-        margin-left: 0.16rem;
-        float: left;
-    }
-
-    .nickname {
-        font-size: 0.32rem;
-        font-weight: 400;
-        color: rgba(255, 255, 255, 1);
-        line-height: 0.47rem;
-    }
-
-    .rank {
-        box-sizing: border-box;
-        text-align: center;
-        display: inline-block;
-        height: 0.38rem;
-        line-height: 0.38rem;
-        padding: 0.06rem 0.12rem;
-        font-size: 0;
-        background: rgba(255, 255, 255, 1);
-        border-radius: 0.19rem;
-    }
-
-    .icon-rank {
-        display: inline-block;
-        vertical-align: top;
-        width: 0.30rem;
-        height: 0.25rem;
-        background: url("./img/icon_vip.jpg") center no-repeat;
-        background-size: contain;
-    }
-
-    .rank-txt {
-        display: inline-block;
-        vertical-align: top;
-        margin-left: 0.07rem;
-        font-size: 0.18rem;
-        font-weight: 400;
-        color: rgba(41, 41, 41, 1);
-    }
-
-    .rank-wrapper {
-        position: relative;
-        background-color: #fff;
-    }
-
-    .rank-wrapper::before {
-        content: "";
-        position: absolute;
-        left: 0;
-        top: -0.03rem;
-        width: 100%;
-        box-shadow: 0 0 0.1rem 0.01rem rgba(0, 0, 0, 0.35);
-    }
-
-    .divider {
-        display: inline-block;
-        margin-left: 0.45rem;
-        margin-right: 0.17rem;
-        margin-top: 0.52rem;
-        width: 0.08rem;
-        height: 0.34rem;
-        background: rgba(51, 128, 255, 1);
-        border-radius: 0.04rem;
-    }
-
-    .divider-label {
-        display: inline-block;
-        font-size: 0.32rem;
-        font-weight: 400;
-        color: rgba(41, 41, 41, 1);
-        line-height: 0.47rem;
-    }
-
-    .rank-block {
-        margin: 0.36rem;
-        display: flex;
-        flex-wrap: wrap;
-    }
-
-    .rank-item {
-        width: 33.33333%;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 0.62rem;
-    }
-
-    .rank-item .rank-icon {
-        width: 1.33rem;
-        height: 1.34rem;
-    }
-
-    .rank-item .rank-title {
-        font-size: 0.34rem;
-        font-weight: 500;
-        color: rgba(41, 41, 41, 1);
-        line-height: 0.47rem;
-    }
-
-    .rank-item .rank-desc {
-        font-size: 0.24rem;
-        font-weight: 400;
-        color: rgba(102, 102, 102, 1);
-        line-height: 0.47rem;
-    }
-
-    .rank-detail {
-        margin-top: 0.2rem;
-        padding-bottom: 1px;
-        margin-bottom: 0.08rem;
-        background-color: #fff;
-    }
-
-    .rank-detail .rank-table {
-        margin: 0 auto;
-        margin-top: 0.4rem;
-        width: 6.92rem;
-        border-collapse: collapse;
-    }
-
-    .rank-detail .rank-table tr,
-    .rank-detail .rank-table td {
-        border: 1px solid rgba(240, 240, 240, 1);
-    }
-
-    .rank-detail .rank-table th {
-        border: 1px solid rgba(240, 240, 240, 1);
-        font-size: 0.32rem;
-        font-weight: 400;
-        color: rgba(41, 41, 41, 1);
-        line-height: 0.47rem;
-    }
-
-    .txt-center {
-        text-align: center;
-    }
-
-    .rank-detail .rank-table ul {
-        font-size: 0.23rem;
-        font-weight: 400;
-        color: rgba(41, 41, 41, 1);
-        line-height: 0.42rem;
-    }
-
-    .rank-detail .rank-table ul li {
-        position: relative;
-        margin-left: 0.1rem;
-    }
-
-    .rank-detail .rank-table ul li::before {
-        content: "";
-        position: absolute;
-        left: -0.08rem;
-        top: 0.16rem;
-        width: 0.06rem;
-        height: 0.06rem;
-        background: rgba(0, 0, 0, 1);
-        border-radius: 50%;
-    }
-
-    .rank-detail .rank-table .open-btn {
-        margin-top: 0.22rem;
-        margin-left: 0.1rem;
-        margin-right: 0.1rem;
-        width: 1.50rem;
-        height: 0.56rem;
-        line-height: 0.56rem;
-        background: rgba(51, 128, 255, 1);
-        border-radius: 0.28rem;
-
-        text-align: center;
-        font-size: 0.26rem;
-        font-weight: 400;
-        color: rgba(255, 255, 255, 1);
-    }
-
-    .rank-detail .rank-table .position {
-        text-align: center;
-        font-size: 0.28rem;
-        font-weight: 400;
-        color: rgba(41, 41, 41, 1);
-        line-height: 0.30rem;
-        width: 0.8rem;
-    }
-
-    .rank-detail .rank-table .price {
-        font-size: 0.32rem;
-        font-weight: 400;
-        color: rgba(41, 41, 41, 1);
-        line-height: 0.42rem;
-    }
-
-    .rank-detail .rank-table .gift {
-        font-size: 0.24rem;
-        font-weight: 400;
-        color: rgba(102, 102, 102, 1);
-        line-height: 0.42rem;
-    }
-    .rank-detail .open-btn.disabled{
-        background-color: #ccc;
-    }
-</style>
 
 <body>
     <div id="app" v-cloak class="container">
