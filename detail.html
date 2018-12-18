@@ -406,8 +406,8 @@
         function getData(token){
 
             $.ajax({
-                // url: "http://inbbb.net/yb/user/detail?token="+token,
-                url: "http://inbbb.net/yb/user/detail?token="+"1|zbBSGTHEpFZXAS80S7hcOtk+j2Q=",
+                url: "http://inbbb.net/yb/user/detail?token="+token,
+                // url: "http://inbbb.net/yb/user/detail?token="+"1|zbBSGTHEpFZXAS80S7hcOtk+j2Q=",
                 method: "GET",
                 success:function(data){
                     if(data.err_code==0){
@@ -427,15 +427,15 @@
             var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
             var flag=window.webkit && window.webkit.messageHandlers
             
-            getData();
-            // if(isAndroid){
-            //     if (window.android && typeof (window.android.getToken) == "function") {
-            //         var token = window.android.getToken();
-            //         getData(token);
-            //     } else {
-            //         alert("没有android.getToken方法");
-            //     }
-            // }
+            // getData();
+            if(isAndroid){
+                if (window.android && typeof (window.android.getToken) == "function") {
+                    var token = window.android.getToken();
+                    getData(token);
+                } else {
+                    alert("没有android.getToken方法");
+                }
+            }
 
             if(isiOS&&flag){
                 console.log(code.innerText);
