@@ -139,7 +139,10 @@
         padding: 0;
         list-style: none;
     }
-
+    html,body{
+        width: 100%;
+        height: 100%;
+    }
     .container {
         background: rgba(239, 239, 244, 1);
         margin: 0 auto;
@@ -394,6 +397,23 @@
         color: rgba(41, 41, 41, 1);
         line-height: 1;
     }
+    .overlayer{
+        display: none;
+        color: #fff;
+        font-size: 0.4rem;
+        text-align: center;
+        height: 100%;
+        position: fixed;
+        left: 0;
+        top: 0;
+        right: 0;
+        padding-top: 6rem;
+        bottom: 0;
+        z-index: 999;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        background-color: rgba(0,0,0,0.5);
+    }
 </style>
 
 <body>
@@ -463,6 +483,7 @@
             </div>
         </div>
     </div>
+    <div id="overlayer" class="overlayer">正在支付中...</div>
 
     <script src="./js/zepto.min.js"></script>
     <script src="./js/picker.min.js" charset="utf-8"></script>
@@ -653,10 +674,31 @@
             return true;
         }
 
+        var _token="";
+        (function getToken(){
+            var u = navigator.userAgent, app = navigator.appVersion;
+            var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
+            var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+            var flag=window.webkit && window.webkit.messageHandlers
+            
+            if(isAndroid){
+                if (window.android && typeof (window.android.getToken) == "function") {
+                    var token = window.android.getToken();
+                    alert("token是"+token);
+                    _token=token;
+                } else {
+                    alert("没有android.getToken方法");
+                }
+            }
+
+            if(isiOS&&flag){
+                console.log(code.innerText);
+                // window.webkit.messageHandlers.getToken && window.webkit.messageHandlers.getToken.postMessage(code.innerText);
+                // window.webkit.messageHandlers.jump && window.webkit.messageHandlers.jump.postMessage(jumpUrl.alipay.home);
+            }
+        }())
 
         function submitForm() {
-            console.log("ajax");
-
             $.ajax({
                 url: "http://inbbb.net/yb/new/order",
                 method: "GET",
@@ -665,16 +707,23 @@
                     pay_type:$(".choose-item.active").siblings().eq(1).attr("type"),
                     recipient:receiver.value,
                     mobile:phone.value,
+                    email:poster.value,
                     address:cityPicker.value+address.value,
-                    token:"1|zbBSGTHEpFZXAS80S7hcOtk+j2Q=",
+                    // token:"1|zbBSGTHEpFZXAS80S7hcOtk+j2Q=",//token
+                    token:_token,//token
                     return_url:"http://www.baidu.com",
-
-                    // receiver: receiver.value,
-                    // phone: phone.value,
-                    // cityPicker: cityPicker.value,
-                    // address: address.value,
-                    // poster: poster.value,
-                    // payWay: $(".choose-item.active").siblings().eq(1).html()
+                },
+                success:function(data){
+                    $("#overlayer").hide();
+                    console.log(data);
+                    alert(JSON.stringify(data))
+                    if(data.err_code==0&&data.pay_url){
+                        window.location.href=data.pay_url;
+                    }
+                },
+                error:function(err){
+                    alert(JSON.stringify(err));
+                    $("#overlayer").hide();
                 }
             })
         }
@@ -683,7 +732,7 @@
             if (!checkForm()) {
                 return false;
             }
-
+            $("#overlayer").show();
             submitForm();
         })
     </script>

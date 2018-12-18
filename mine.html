@@ -192,34 +192,23 @@
         }
 
         .rank {
-            text-align: center;
             box-sizing: border-box;
             text-align: center;
             display: inline-block;
-            height: 0.38rem;
-            line-height: 0.38rem;
-            padding: 0 0.12rem;
-            font-size: 0;
+            padding: 0.05rem 0.12rem;
+            font-size: 0.18rem;
+
             background: rgba(255, 255, 255, 1);
             border-radius: 0.19rem;
         }
 
         .icon-rank {
             display: inline-block;
-            vertical-align: top;
+            vertical-align: middle;
             width: 0.30rem;
-            height: 100%;
-            background: url("./img/icon_vip.jpg") center no-repeat;
+            height: 0.30rem;
+            background: url("./img/icon_vip.jpg") top center no-repeat;
             background-size: contain;
-        }
-
-        .rank-txt {
-            display: inline-block;
-            vertical-align: top;
-            margin-left: 0.07rem;
-            font-size: 0.18rem;
-            font-weight: 400;
-            color: rgba(41, 41, 41, 1);
         }
 
         .rank-wrapper {
@@ -401,11 +390,11 @@
                     </div>
                     <div class="rank">
                         <div v-if="user.level>0" class="icon-rank"></div>
-                        <div v-if="user.level==0" class="rank-txt">普通用户</div>
-                        <div v-if="user.level==1" class="rank-txt">普通VIP</div>
-                        <div v-if="user.level==2" class="rank-txt">高级VIP</div>
-                        <div v-if="user.level==3" class="rank-txt">经理</div>
-                        <div v-if="user.level==4" class="rank-txt">总监</div>
+                        <span v-if="user.level==0">普通用户</span>
+                        <span v-if="user.level==1">普通VIP</span>
+                        <span v-if="user.level==2">高级VIP</span>
+                        <span v-if="user.level==3">经理</span>
+                        <span v-if="user.level==4">总监</span>
                     </div>
                 </div>
             </div>
@@ -621,7 +610,7 @@
             			    this.token=token;
                             this.getData();
             			} else {
-            			    alert("没有android.getInviteCode方法");
+            			    alert("没有android.getToken方法");
             			}
             		}
 
@@ -634,13 +623,16 @@
                 getData:function(){
                     var _this=this;
                     // axios.get(this.api+this.token)
-                    axios.get("http://localhost:3000/user")
+                    axios.get("http://192.168.0.191:3000/user")
                     .then(function(res){
                         console.log(res.data);
                         if(res&&res.data.err_code==0){
                             console.log(_this)
                             _this.user=res.data.user;
                         }
+                    })
+                    .catch(function(err){
+                    	console.log(err);
                     })
                 },
                 openMember:function(res,price,level){

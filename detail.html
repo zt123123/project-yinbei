@@ -248,6 +248,23 @@
         background-color: rgb(251, 109, 82);
         display: inline-block;
     }
+    .overlayer{
+        display: none;
+        color: #fff;
+        font-size: 0.4rem;
+        text-align: center;
+        height: 100%;
+        position: fixed;
+        left: 0;
+        top: 0;
+        right: 0;
+        padding-top: 6rem;
+        bottom: 0;
+        z-index: 999;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        background-color: rgba(0,0,0,0.5);
+    }
 </style>
 
 <body>
@@ -258,7 +275,7 @@
         <div class="title">
             请选择支付方式
         </div>
-        <div class="pay-item alipay">
+        <div class="pay-item alipay" id="alipay" type="0">
             <div class="icon icon-alipay"></div>
             <div class="pay-desc">
                 <div class="recommand">
@@ -271,7 +288,7 @@
                 </div>
             </div>
         </div>
-        <div class="pay-item wechat">
+        <div class="pay-item wechat" id="wechatPay" type="1">
             <div class="icon icon-wechat"></div>
             <div class="pay-desc">
                 <div class="pay-txt">
@@ -284,22 +301,81 @@
         </div>
     </div>
     <div class="mask" id="mask"></div>
+    <div id="overlayer" class="overlayer">正在支付中...</div>
     <div class="float-btn" id="openBtn">
         立即开通
     </div>
-
+    <script src="./js/zepto.min.js"></script>
     <script>
-        var isVip = true;
+        function getParamName(name) {
+          var url = location.search; //获取url中"?"符后的字串
+          var theRequest = new Object();
+          if (url.indexOf("?") != -1) {
+            var str = url.substr(1);
+            strs = str.split("&");
+            for (var i = 0; i < strs.length; i++) {
+              theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+            }
+          }
+          return theRequest[name]
+        }
+
+        var vipLevel = getParamName("level");
+        var price = getParamName("price");
         var payPanel = document.getElementById("payPanel");
         var mask = document.getElementById("mask");
         document.getElementById("openBtn").addEventListener("click", function () {
-            if (isVip) {
-                window.location.href = "./order.html";
+            if (vipLevel>2) {
+                window.location.href = "./order.html?level="+vipLevel+"&price="+parseInt(price);
             } else {
                 payPanel.style.display = "block";
                 mask.style.display = "block";
             }
         })
+
+        var payType=0;
+        $("#alipay").on("click",function(){
+            payType=0;
+            $("#overlayer").show();
+            submitForm();
+        })
+        $("#wechatPay").on("click",function(){
+            payType=1
+            $("#overlayer").show();
+            submitForm();
+        })
+
+        function submitForm() {
+            console.log("post form");
+
+            // $.ajax({
+            //     url: "http://inbbb.net/yb/new/order",
+            //     method: "GET",
+            //     data: {
+            //         level:getParamName("level"),
+            //         pay_type:payType,
+            //         recipient:receiver.value,
+            //         mobile:phone.value,
+            //         email:poster.value,
+            //         address:cityPicker.value+address.value,
+            //         // token:"1|zbBSGTHEpFZXAS80S7hcOtk+j2Q=",//token
+            //         token:_token,//token
+            //         return_url:"http://www.baidu.com",
+            //     },
+            //     success:function(data){
+            //         $("#overlayer").hide();
+            //         console.log(data);
+            //         alert(JSON.stringify(data))
+            //         if(data.err_code==0&&data.pay_url){
+            //             window.location.href=data.pay_url;
+            //         }
+            //     },
+            //     error:function(err){
+            //         alert(JSON.stringify(err));
+            //         $("#overlayer").hide();
+            //     }
+            // })
+        }
 
         mask.addEventListener("click", function () {
             this.style.display = "none";

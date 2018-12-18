@@ -305,7 +305,11 @@
             btn[i].addEventListener("click", function () {
                 price=this.getAttribute("price");
                 level=this.getAttribute("level");
-                window.location.href = "./detail.html?level="+level+"&price="+price;
+                if(level==1||level==2){
+                    window.location.href = "./detail.html?level="+level+"&price="+price;
+                }else{
+                    window.location.href = "./order.html?level="+level+"&price="+price;
+                }
             })
         }
 
