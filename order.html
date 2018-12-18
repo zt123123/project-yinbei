@@ -692,7 +692,6 @@
             if(isAndroid){
                 if (window.android && typeof (window.android.getToken) == "function") {
                     var token = window.android.getToken();
-                    alert("token是"+token);
                     _token=token;
                 } else {
                     alert("没有android.getToken方法");
@@ -719,12 +718,11 @@
                     address:cityPicker.value+address.value,
                     // token:"1|zbBSGTHEpFZXAS80S7hcOtk+j2Q=",//token
                     token:_token,//token
-                    return_url:"http://www.baidu.com",
+                    return_url:location.hostname+"/status.html",
                 },
                 success:function(data){
                     $("#overlayer").hide();
                     console.log(data);
-                    alert(JSON.stringify(data))
                     if(data.err_code==0&&data.pay_url){
                         window.location.href=data.pay_url;
                     }

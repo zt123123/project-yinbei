@@ -312,6 +312,7 @@
         立即开通
     </div>
     <script src="./js/zepto.min.js"></script>
+    <script src="./js/show-toast.js"></script>
     <script>
         function getParamName(name) {
           var url = location.search; //获取url中"?"符后的字串
@@ -376,6 +377,11 @@
         var payPanel = document.getElementById("payPanel");
         var mask = document.getElementById("mask");
         document.getElementById("openBtn").addEventListener("click", function () {
+            if(globalLevel>=vipLevel){
+                showToast('开通会员不能比当前会员等级低');
+                return false;
+            }
+
             if (vipLevel>2) {
                 window.location.href = "./order.html?level="+vipLevel+"&price="+parseInt(price);
             } else {
@@ -395,6 +401,49 @@
             $("#overlayer").show();
             submitForm();
         })
+
+        var globalLevel=null;
+        function getData(token){
+
+            $.ajax({
+                // url: "http://inbbb.net/yb/user/detail?token="+token,
+                url: "http://inbbb.net/yb/user/detail?token="+"1|zbBSGTHEpFZXAS80S7hcOtk+j2Q=",
+                method: "GET",
+                success:function(data){
+                    if(data.err_code==0){
+                        console.log(data.user.level);
+                        globalLevel=data.user.level;
+                    }
+                },
+                error:function(err){
+                    alert(JSON.stringify(err));
+                }
+            })
+        }
+
+        (function getToken(){
+            var u = navigator.userAgent, app = navigator.appVersion;
+            var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
+            var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+            var flag=window.webkit && window.webkit.messageHandlers
+            
+            getData();
+            // if(isAndroid){
+            //     if (window.android && typeof (window.android.getToken) == "function") {
+            //         var token = window.android.getToken();
+            //         getData(token);
+            //     } else {
+            //         alert("没有android.getToken方法");
+            //     }
+            // }
+
+            if(isiOS&&flag){
+                console.log(code.innerText);
+                // window.webkit.messageHandlers.getToken && window.webkit.messageHandlers.getToken.postMessage(code.innerText);
+                // window.webkit.messageHandlers.jump && window.webkit.messageHandlers.jump.postMessage(jumpUrl.alipay.home);
+            }
+        }())
+
 
         function submitForm() {
             console.log("post form");
