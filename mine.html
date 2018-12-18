@@ -622,8 +622,8 @@
             	},
                 getData:function(){
                     var _this=this;
-                    // axios.get(this.api+this.token)
-                    axios.get("http://192.168.0.191:3000/user")
+                    axios.get(this.api+this.token)
+                    // axios.get("http://192.168.0.191:3000/user")
                     .then(function(res){
                         console.log(res.data);
                         if(res&&res.data.err_code==0){

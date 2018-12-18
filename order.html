@@ -172,7 +172,7 @@
         margin: 0 auto;
         margin-top: 0.2rem;
         width: 7.10rem;
-        height: 4.04rem;
+        height: 2.8rem;
         background: rgba(255, 255, 255, 1);
         border-radius: 0.22rem;
     }
@@ -304,7 +304,7 @@
         line-height: 0.36rem;
     }
 
-    .product-detail {
+/*    .product-detail {
         margin-top: 0.32rem;
     }
 
@@ -314,7 +314,7 @@
 
     .product-detail .content {
         float: right;
-    }
+    }*/
 
     .product-price {
         overflow: hidden;
@@ -437,26 +437,26 @@
         </div>
         <div class="product-panel">
             <div class="header">
-                <h3 class="title">商品信息</h3>
+                <h3 class="title">赠品信息</h3>
             </div>
             <div class="thumnail">
-                <div class="product-pic">
+                <div id="giftPic" class="product-pic">
 
                 </div>
                 <div class="product-wrapper">
-                    <div class="product-title">
-                        推广总监...
+                    <div id="positionName" class="product-title">
+                        xxx
                     </div>
-                    <div class="product-desc">
-                        赠送高级矿机
+                    <div id="giftName" class="product-desc">
+                        赠送xxx
                     </div>
                 </div>
             </div>
-            <div class="product-detail">
+<!--             <div class="product-detail">
                 <div class="product-price"><span class="label">商品金额</span><span class="content">¥<span id="price">9998</span></span></div>
                 <div class="product-discount"><span class="label">优惠</span><span class="content">-¥<span id="discount">200</span></span></div>
                 <div class="order-price"><span class="label">订单金额</span><span class="content">¥<span id="realPrice">9797</span></span></div>
-            </div>
+            </div> -->
         </div>
         <div class="pay-panel">
             <div class="header">
@@ -479,7 +479,7 @@
             <div class="submit-btn" id="submit">立即支付</div>
             <div class="total">
                 <span class="total-label">合计：</span>
-                <span>¥9798.00</span>
+                <span id="payPrice">¥0.00</span>
             </div>
         </div>
     </div>
@@ -504,12 +504,20 @@
         }
 
         (function(){
-            $("#price").html(getParamName("price"));
+            var level=parseInt(getParamName("level"));
+            var price=parseInt(getParamName("price")).toFixed(2);
 
-            var price=parseInt($("#price").html());
-            var discount=parseInt($("#discount").html());
-            
-            $("#realPrice").html(price-discount);
+            if(level==3){
+                $("#positionName").html("推广经理");
+                $("#giftName").html("赠品:盈贝金灵(中级版)");
+            }
+            if(level==4){
+                $("#positionName").html("推广总监");
+                $("#giftName").html("赠品:盈贝金灵(高级版)");
+            }
+
+            $("#payPrice").html("¥" + price);
+            $("#giftPic").css("background-image","url(./img/icon/vip"+level+".png)");
         })()
 
 

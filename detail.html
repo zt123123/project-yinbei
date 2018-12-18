@@ -146,6 +146,7 @@
 
     .container {
         margin: 0 auto;
+        margin-bottom: 1rem;
     }
 
     .pay-panel {
@@ -170,14 +171,16 @@
         left: 0;
         bottom: 0;
         width: 100%;
-        height: 1.3rem;
-        line-height: 1.3rem;
+        height: 1rem;
+        font-size: 0.25rem;
+        line-height: 1rem;
         text-align: center;
         color: #fff;
         background: rgba(51, 128, 255, 1);
     }
 
     .mask {
+        display: none;
         background-color: rgba(0, 0, 0, 0.2);
         position: fixed;
         left: 0;
@@ -265,10 +268,13 @@
         box-sizing: border-box;
         background-color: rgba(0,0,0,0.5);
     }
+    .container .role img{
+        width: 7.5rem;
+    }
 </style>
 
 <body>
-    <div class="container">
+    <div id="detailContainer" class="container">
 
     </div>
     <div class="pay-panel" id="payPanel">
@@ -319,6 +325,51 @@
           }
           return theRequest[name]
         }
+
+        (function showDetail(){
+            var level=getParamName("level");
+
+            var html=""
+            switch(level){
+                case "1":
+                html+='<div id="level1" class="role vip">'+
+                        '<img src="./img/detail/vip/detail1.jpg" alt="">'+
+                        '<img src="./img/detail/vip/detail2.jpg" alt="">'+
+                    '</div>';
+                    break;
+                case "2":
+                html+='<div id="level2" class="role svip">'+
+                        '<img src="./img/detail/svip/detail1.jpg" alt="">'+
+                        '<img src="./img/detail/svip/detail2.jpg" alt="">'+
+                    '</div>';
+                    break;
+                case "3":
+                html+='<div id="level3" class="role gm">'+
+                    '<img src="./img/detail/gm/detail1.jpg" alt="">'+
+                    '<img src="./img/detail/gm/detail2.jpg" alt="">'+
+                    '<img src="./img/detail/gm/goods1.jpg" alt="">'+
+                    '<img src="./img/detail/gm/goods2.jpg" alt="">'+
+                    '<img src="./img/detail/gm/goods3.jpg" alt="">'+
+                    '<img src="./img/detail/gm/goods4.jpg" alt="">'+
+                    '<img src="./img/detail/gm/goods5.jpg" alt="">'+
+                '</div>';
+                    break;
+                case "4":
+                html+='<div id="level4" class="role cto">'+
+                        '<img src="./img/detail/cto/detail1.jpg" alt="">'+
+                        '<img src="./img/detail/cto/detail2.jpg" alt="">'+
+                        '<img src="./img/detail/cto/goods1.jpg" alt="">'+
+                        '<img src="./img/detail/cto/goods2.jpg" alt="">'+
+                        '<img src="./img/detail/cto/goods3.jpg" alt="">'+
+                        '<img src="./img/detail/cto/goods4.jpg" alt="">'+
+                        '<img src="./img/detail/cto/goods5.jpg" alt="">'+
+                    '</div>';
+                    break;
+            }
+
+            $("#detailContainer").html(html);
+        }())
+
 
         var vipLevel = getParamName("level");
         var price = getParamName("price");
