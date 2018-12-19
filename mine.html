@@ -592,7 +592,7 @@
             },
             created:function(){
                 this.getToken();
-                this.getData();
+                // this.getData();
             },
             mounted:function(){
 				
@@ -642,7 +642,11 @@
                         return false;
                     }
 
-                    window.location.href="./order.html?level="+level+"&price="+parseInt(price);
+                    if(level==1||level==2){
+                        window.location.href="./detail.html?level="+level+"&price="+parseInt(price);
+                    }else{
+                        window.location.href="./order.html?level="+level+"&price="+parseInt(price);
+                    }
                 }
             }
         })

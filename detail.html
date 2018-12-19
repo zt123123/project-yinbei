@@ -421,7 +421,7 @@
             })
         }
 
-        (function getToken(){
+        function getToken(){
             var u = navigator.userAgent, app = navigator.appVersion;
             var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
             var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
@@ -431,7 +431,7 @@
             if(isAndroid){
                 if (window.android && typeof (window.android.getToken) == "function") {
                     var token = window.android.getToken();
-                    getData(token);
+                    return token;
                 } else {
                     alert("没有android.getToken方法");
                 }
@@ -442,39 +442,35 @@
                 // window.webkit.messageHandlers.getToken && window.webkit.messageHandlers.getToken.postMessage(code.innerText);
                 // window.webkit.messageHandlers.jump && window.webkit.messageHandlers.jump.postMessage(jumpUrl.alipay.home);
             }
-        }())
+        }
 
 
         function submitForm() {
             console.log("post form");
+            var token = getToken();
 
-            // $.ajax({
-            //     url: "http://inbbb.net/yb/new/order",
-            //     method: "GET",
-            //     data: {
-            //         level:getParamName("level"),
-            //         pay_type:payType,
-            //         recipient:receiver.value,
-            //         mobile:phone.value,
-            //         email:poster.value,
-            //         address:cityPicker.value+address.value,
-            //         // token:"1|zbBSGTHEpFZXAS80S7hcOtk+j2Q=",//token
-            //         token:_token,//token
-            //         return_url:"http://www.baidu.com",
-            //     },
-            //     success:function(data){
-            //         $("#overlayer").hide();
-            //         console.log(data);
-            //         alert(JSON.stringify(data))
-            //         if(data.err_code==0&&data.pay_url){
-            //             window.location.href=data.pay_url;
-            //         }
-            //     },
-            //     error:function(err){
-            //         alert(JSON.stringify(err));
-            //         $("#overlayer").hide();
-            //     }
-            // })
+            alert("return_url:"+location.protocol+"//"+location.hostname+"/yingbei/mine.html");
+
+            $.ajax({
+                url: "http://inbbb.net/yb/new/order",
+                method: "GET",
+                data: {
+                    level:getParamName("level"),
+                    pay_type:payType,
+                    token:token,//token
+                    return_url:location.protocol+"//"+location.hostname+"/yingbei/mine.html",
+                },
+                success:function(data){
+                    $("#overlayer").hide();
+                    if(data.err_code==0&&data.pay_url){
+                        window.location.href=data.pay_url;
+                    }
+                },
+                error:function(err){
+                    alert(JSON.stringify(err));
+                    $("#overlayer").hide();
+                }
+            })
         }
 
         mask.addEventListener("click", function () {

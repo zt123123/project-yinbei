@@ -706,6 +706,9 @@
         }())
 
         function submitForm() {
+            
+            alert("return_url:"+location.protocol+"//"+location.hostname+"/yingbei/mine.html");
+
             $.ajax({
                 url: "http://inbbb.net/yb/new/order",
                 method: "GET",
@@ -718,7 +721,7 @@
                     address:cityPicker.value+address.value,
                     // token:"1|zbBSGTHEpFZXAS80S7hcOtk+j2Q=",//token
                     token:_token,//token
-                    return_url:location.hostname+"/status.html",
+                    return_url:location.protocol+"//"+location.hostname+"/yingbei/mine.html",
                 },
                 success:function(data){
                     $("#overlayer").hide();
