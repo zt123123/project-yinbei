@@ -130,6 +130,7 @@
         margin: 0;
         padding: 0;
         background-size: 100%;
+        overflow: hidden;
     }
 
     ul,
@@ -181,7 +182,10 @@
         width: 6.86rem;
         height: 0.90rem;
     }
-
+    .table-body{
+        overflow: scroll;
+        height: 9rem;
+    }
     .tab-item {
         float: left;
         width: 3.43rem;
@@ -294,7 +298,6 @@
         var data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
 
         for (var i = 0; i < data.length; i++) {
-            var item = data[i];
             str += '<div class="table-item">';
             switch (i) {
                 case 0:
@@ -303,7 +306,7 @@
                     str += '<div class="' + "no no" + (i + 1) + '"></div>';
                     break;
                 default:
-                    str += '<div>' + i + '</div>';
+                    str += '<div>' + (i+1) + '</div>';
             }
             str += '<div class="nickname">' + 200 + '</div>';
             str += '<div class="num">' + 200 + '</div>';

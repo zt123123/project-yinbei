@@ -172,7 +172,8 @@
         bottom: 0;
         width: 100%;
         height: 1rem;
-        font-size: 0.25rem;
+        letter-spacing: 2px;
+        font-size: 0.4rem;
         line-height: 1rem;
         text-align: center;
         color: #fff;
@@ -377,16 +378,11 @@
         var payPanel = document.getElementById("payPanel");
         var mask = document.getElementById("mask");
         document.getElementById("openBtn").addEventListener("click", function () {
-            if(globalLevel>=vipLevel){
-                showToast('开通会员不能比当前会员等级低');
-                return false;
-            }
-
             if (vipLevel>2) {
                 window.location.href = "./order.html?level="+vipLevel+"&price="+parseInt(price);
             } else {
-                payPanel.style.display = "block";
-                mask.style.display = "block";
+                getData();
+
             }
         })
 
@@ -395,6 +391,7 @@
             payType=0;
             $("#overlayer").show();
             submitForm();
+            
         })
         $("#wechatPay").on("click",function(){
             payType=1
@@ -402,21 +399,30 @@
             submitForm();
         })
 
-        var globalLevel=null;
-        function getData(token){
+        function getData(){
+            var token = getToken();
+            // var token = "1|zbBSGTHEpFZXAS80S7hcOtk+j2Q=";
 
             $.ajax({
+                // url: "http://localhost:3000/user",
                 url: "http://inbbb.net/yb/user/detail?token="+token,
-                // url: "http://inbbb.net/yb/user/detail?token="+"1|zbBSGTHEpFZXAS80S7hcOtk+j2Q=",
                 method: "GET",
                 success:function(data){
                     if(data.err_code==0){
                         console.log(data.user.level);
-                        globalLevel=data.user.level;
+                        if(vipLevel<=data.user.level){
+                            showToast('开通会员不能比当前会员等级低');
+                        }else{
+                            payPanel.style.display = "block";
+                            mask.style.display = "block";
+                            // submitForm();
+                        }
                     }
                 },
                 error:function(err){
-                    alert(JSON.stringify(err));
+                    showToast("网络异常");
+                    // payPanel.style.display = "none";
+                    // mask.style.display = "none";
                 }
             })
         }
@@ -433,7 +439,7 @@
                     var token = window.android.getToken();
                     return token;
                 } else {
-                    alert("没有android.getToken方法");
+                    showToast("没有android.getToken方法");
                 }
             }
 
@@ -444,13 +450,12 @@
             }
         }
 
-
         function submitForm() {
             console.log("post form");
+            // alert("return_url:"+location.protocol+"//"+location.hostname+"/yingbei/mine.html");
             var token = getToken();
-
-            alert("return_url:"+location.protocol+"//"+location.hostname+"/yingbei/mine.html");
-
+            // var token = "1|zbBSGTHEpFZXAS80S7hcOtk+j2Q=";
+            
             $.ajax({
                 url: "http://inbbb.net/yb/new/order",
                 method: "GET",
@@ -464,11 +469,15 @@
                     $("#overlayer").hide();
                     if(data.err_code==0&&data.pay_url){
                         window.location.href=data.pay_url;
+                    }else{
+                        showToast(data.err_msg);
                     }
                 },
                 error:function(err){
-                    alert(JSON.stringify(err));
+                    showToast("网络异常");
                     $("#overlayer").hide();
+                    // payPanel.style.display = "none";
+                    // mask.style.display = "none";
                 }
             })
         }

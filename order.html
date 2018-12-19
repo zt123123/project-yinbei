@@ -437,7 +437,7 @@
         </div>
         <div class="product-panel">
             <div class="header">
-                <h3 class="title">赠品信息</h3>
+                <h3 class="title">商品信息</h3>
             </div>
             <div class="thumnail">
                 <div id="giftPic" class="product-pic">
@@ -508,11 +508,11 @@
             var price=parseInt(getParamName("price")).toFixed(2);
 
             if(level==3){
-                $("#positionName").html("推广经理");
+                $("#positionName").html("黄金VIP");
                 $("#giftName").html("赠品:盈贝金灵(中级版)");
             }
             if(level==4){
-                $("#positionName").html("推广总监");
+                $("#positionName").html("钻石VIP");
                 $("#giftName").html("赠品:盈贝金灵(高级版)");
             }
 
@@ -707,8 +707,6 @@
 
         function submitForm() {
             
-            alert("return_url:"+location.protocol+"//"+location.hostname+"/yingbei/mine.html");
-
             $.ajax({
                 url: "http://inbbb.net/yb/new/order",
                 method: "GET",
@@ -731,7 +729,7 @@
                     }
                 },
                 error:function(err){
-                    alert(JSON.stringify(err));
+                    showToast("网络异常");
                     $("#overlayer").hide();
                 }
             })
