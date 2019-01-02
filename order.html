@@ -652,6 +652,12 @@
         var address = document.getElementById("address");
         var poster = document.getElementById("poster");
 
+        var u = navigator.userAgent, app = navigator.appVersion;
+        var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
+        var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+
+        var iosToken = "";
+
         function checkForm() {
             if (receiver.value == "") {
                 showToast('收货人不能为空');
@@ -684,11 +690,6 @@
 
         var _token="";
         (function getToken(){
-            var u = navigator.userAgent, app = navigator.appVersion;
-            var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
-            var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
-            var flag=window.webkit && window.webkit.messageHandlers
-            
             if(isAndroid){
                 if (window.android && typeof (window.android.getToken) == "function") {
                     var token = window.android.getToken();
@@ -697,13 +698,14 @@
                     alert("没有android.getToken方法");
                 }
             }
-
-            if(isiOS&&flag){
-                console.log(code.innerText);
-                // window.webkit.messageHandlers.getToken && window.webkit.messageHandlers.getToken.postMessage(code.innerText);
-                // window.webkit.messageHandlers.jump && window.webkit.messageHandlers.jump.postMessage(jumpUrl.alipay.home);
-            }
         }())
+
+        window.onload=function(){
+            window.setToken=function(token){
+                iosToken=token;
+                alert("ios setToken获取token为："+token);
+            }
+        }
 
         function submitForm() {
             
@@ -718,7 +720,7 @@
                     email:poster.value,
                     address:cityPicker.value+address.value,
                     // token:"1|zbBSGTHEpFZXAS80S7hcOtk+j2Q=",//token
-                    token:_token,//token
+                    token:isiOS?iosToken:_token,//token
                     return_url:location.protocol+"//"+location.hostname+"/yingbei/mine.html",
                 },
                 success:function(data){

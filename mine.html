@@ -448,212 +448,215 @@
 
     <script src="./js/show-toast.js"></script>
     <script>
-        var vm = new Vue({
-            el: "#app",
-            data:  {
-                user:{},
-                api:"http://inbbb.net/yb/user/detail?token=",
-                data: [
-                    {
-                        icon_normal: "./img/icon_read.png",
-                        icon_active: "./img/icon_read_active.png",
-                        privilege: [
-                            "30%",
-                            "10%",
-                            "20%",
-                            "30%",
-                            "40%",
-                        ],
-                        desc: "好友阅读进贡"
-                    },
-                    {
-                        icon_normal: "./img/icon_red.png",
-                        icon_active: "./img/icon_red_active.png",
-                        privilege: [
-                            "",
-                            "10000金币",
-                            "15000金币",
-                            "30000金币",
-                            "50000金币",
-                        ],
-                        desc: "每日红包奖励"
-                    },
-                    {
-                        icon_normal: "./img/icon_push.png",
-                        icon_active: "./img/icon_push_active.png",
-                        privilege: [
-                            "无上限",
-                            "无上限",
-                            "无上限",
-                            "无上限",
-                            "无上限",
-                        ],
-                        desc: "推广奖金"
-                    },
-                    {
-                        icon_normal: "./img/icon_bonus.png",
-                        icon_active: "./img/icon_bonus_active.png",
-                        privilege: [
-                            "",
-                            "",
-                            "1%",
-                            "2%",
-                            "3%",
-                        ],
-                        desc: "管理奖金"
-                    },
-                    {
-                        icon_normal: "./img/icon_tel.png",
-                        icon_active: "./img/icon_tel_active.png",
-                        privilege: [
-                            "",
-                            "95%",
-                            "90%",
-                            "85%",
-                            "80%",
-                        ],
-                        desc: "话费充值特权"
-                    },
-                    {
-                        icon_normal: "./img/icon_auto.png",
-                        icon_active: "./img/icon_auto_active.png",
-                        privilege: [
-                            "",
-                            "",
-                            "",
-                            "暴涨300%",
-                            "暴涨400%",
-                        ],
-                        desc: "全自动挖矿"
-                    }
-                ],
-                list: [
-                    {
-                        level:4,
-                        rank: "钻石VIP",
-                        privilege: [
-                            "每天50000金币红包奖励，签到即得",
-                            "300%徒弟阅读进贡，40%徒孙阅读进贡",
-                            "赠送盈贝金灵（高级版），阅读金币暴涨400%",
-                            "推广奖金：直推1级会员奖励20元，1级推2级也奖励20元，直推50人以后额外奖励第3级，每个10元",
-                            "管理奖金：下属1级、2级内用户升级会员，即可获得升级差额3%的收益",
-                            "充值特权：8折话费充值特权"
-                        ],
-                        price: "9888元",
-                        gift: "赠送盈贝金灵（高级版）"
-                    },
-                    {
-                        level:3,
-                        rank: "黄金VIP",
-                        privilege: [
-                            "每天30000金币红包奖励，签到即得",
-                            "200%徒弟阅读进贡，30%徒孙阅读进贡",
-                            "赠送盈贝金灵（中级版），阅读金币暴涨300%",
-                            "推广奖金：直推1级会员奖励15元，1级推2级也奖励15元，直推50以后额外奖励第3级，每个8元",
-                            "管理奖金：下属1级、2级内用户升级会员，即可获得升级差额2%的收益",
-                            "充值特权：85折话费充值特权"
-                        ],
-                        price: "6888元",
-                        gift: "赠送盈贝金灵（中级版本）"
-                    },
-                    {
-                        level:2,
-                        rank: "高级VIP",
-                        privilege: [
-                            "每天15000金币红包奖励，签到即得；100%徒弟阅读进贡，20%徒孙阅读进贡",
-                            "直推一级会员奖励8元，一级推二级，也奖励你8元，直推50人以后，额外奖励三级每个5元",
-                            "管理奖金：一级、二级内任一会员升级，即可获得升级的1%收益",
-                            "充值特权：9折话费充值特权"
-                        ],
-                        price: "999元",
-                        gift: ""
-                    },
-                    {
-                        level:1,
-                        rank: "初级VIP",
-                        privilege: [
-                            "每天10000金币红包奖励，签到即得",
-                            "50%徒弟阅读进贡，10%徒孙阅读进贡",
-                            "推广奖金：直推1级会员奖励6元，1级推2级也奖励6元，直推50人以后额外奖励第3级，每个3元",
-                            "充值特权：95折话费充值特权"
-                        ],
-                        price: "199元",
-                        gift: ""
-                    },
-                    {
-                        level:0,
-                        rank: "普通用户",
-                        privilege: [
-                            "各类任务，轻松赚金币",
-                            "30%徒弟阅读进贡"
-                        ],
-                        token:"",
-                        price: "",
-                        gift: ""
-                    },
-                ]
-            },
-            created:function(){
-                this.getToken();
-                // this.getData();
-            },
-            mounted:function(){
-				
-            },
-            methods: {
-            	getToken:function(){
-            		var u = navigator.userAgent, app = navigator.appVersion;
-            		var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
-            		var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
-            		var flag=window.webkit && window.webkit.messageHandlers
-            		
-            		if(isAndroid){
-            			if (window.android && typeof (window.android.getToken) == "function") {
-            			    var token = window.android.getToken();
-            			    this.token=token;
-                            this.getData();
-            			} else {
-            			    alert("没有android.getToken方法");
-            			}
-            		}
+        var u = navigator.userAgent, app = navigator.appVersion;
+        var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
+        var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+        var iosToken="";
 
-            		if(isiOS&&flag){
-            		    console.log(code.innerText);
-            		    // window.webkit.messageHandlers.getToken && window.webkit.messageHandlers.getToken.postMessage(code.innerText);
-            		    // window.webkit.messageHandlers.jump && window.webkit.messageHandlers.jump.postMessage(jumpUrl.alipay.home);
-            		}
-            	},
-                getData:function(){
-                    var _this=this;
-                    axios.get(this.api+this.token)
-                    // axios.get("http://192.168.1.2:3000/user")
-                    .then(function(res){
-                        console.log(res.data);
-                        if(res&&res.data.err_code==0){
-                            console.log(_this)
-                            _this.user=res.data.user;
-                        }
-                    })
-                    .catch(function(err){
-                    	console.log(err);
-                        showToast('网络异常');
-                    })
-                },
-                openMember:function(res,price,level){
-                    console.log(res);
-                    if(!res){
-                        showToast('开通会员不能比当前会员等级低');
-                        return false;
-                    }
+        window.onload=function(){
+        	window.setToken=function(token){
+        	    iosToken=token;
+        	    alert("ios setToken获取token为："+token);
+        	}
 
-                    if(level==1||level==2){
-                        window.location.href="./detail.html?level="+level+"&price="+parseInt(price);
-                    }else{
-                        window.location.href="./order.html?level="+level+"&price="+parseInt(price);
-                    }
-                }
-            }
-        })
+        	var vm = new Vue({
+        	    el: "#app",
+        	    data:  {
+        	        user:{},
+        	        api:"http://inbbb.net/yb/user/detail?token=",
+        	        data: [
+        	            {
+        	                icon_normal: "./img/icon_read.png",
+        	                icon_active: "./img/icon_read_active.png",
+        	                privilege: [
+        	                    "30%",
+        	                    "10%",
+        	                    "20%",
+        	                    "30%",
+        	                    "40%",
+        	                ],
+        	                desc: "好友阅读进贡"
+        	            },
+        	            {
+        	                icon_normal: "./img/icon_red.png",
+        	                icon_active: "./img/icon_red_active.png",
+        	                privilege: [
+        	                    "",
+        	                    "10000金币",
+        	                    "15000金币",
+        	                    "30000金币",
+        	                    "50000金币",
+        	                ],
+        	                desc: "每日红包奖励"
+        	            },
+        	            {
+        	                icon_normal: "./img/icon_push.png",
+        	                icon_active: "./img/icon_push_active.png",
+        	                privilege: [
+        	                    "",
+        	                    "无上限",
+        	                    "无上限",
+        	                    "无上限",
+        	                    "无上限",
+        	                ],
+        	                desc: "推广奖金"
+        	            },
+        	            {
+        	                icon_normal: "./img/icon_bonus.png",
+        	                icon_active: "./img/icon_bonus_active.png",
+        	                privilege: [
+        	                    "",
+        	                    "",
+        	                    "1%",
+        	                    "2%",
+        	                    "3%",
+        	                ],
+        	                desc: "管理奖金"
+        	            },
+        	            {
+        	                icon_normal: "./img/icon_tel.png",
+        	                icon_active: "./img/icon_tel_active.png",
+        	                privilege: [
+        	                    "",
+        	                    "95%",
+        	                    "90%",
+        	                    "85%",
+        	                    "80%",
+        	                ],
+        	                desc: "话费充值特权"
+        	            },
+        	            {
+        	                icon_normal: "./img/icon_auto.png",
+        	                icon_active: "./img/icon_auto_active.png",
+        	                privilege: [
+        	                    "",
+        	                    "",
+        	                    "",
+        	                    "暴涨300%",
+        	                    "暴涨400%",
+        	                ],
+        	                desc: "全自动挖矿"
+        	            }
+        	        ],
+        	        list: [
+        	            {
+        	                level:4,
+        	                rank: "钻石VIP",
+        	                privilege: [
+        	                    "每天50000金币红包奖励，签到即得",
+        	                    "300%徒弟阅读进贡，40%徒孙阅读进贡",
+        	                    "赠送盈贝金灵（高级版），阅读金币暴涨400%",
+        	                    "推广奖金：直推1级会员奖励20元，1级推2级也奖励20元，直推50人以后额外奖励第3级，每个10元",
+        	                    "管理奖金：下属1级、2级内用户升级会员，即可获得升级差额3%的收益",
+        	                    "充值特权：8折话费充值特权"
+        	                ],
+        	                price: "9888元",
+        	                gift: "赠送盈贝金灵（高级版）"
+        	            },
+        	            {
+        	                level:3,
+        	                rank: "黄金VIP",
+        	                privilege: [
+        	                    "每天30000金币红包奖励，签到即得",
+        	                    "200%徒弟阅读进贡，30%徒孙阅读进贡",
+        	                    "赠送盈贝金灵（中级版），阅读金币暴涨300%",
+        	                    "推广奖金：直推1级会员奖励15元，1级推2级也奖励15元，直推50以后额外奖励第3级，每个8元",
+        	                    "管理奖金：下属1级、2级内用户升级会员，即可获得升级差额2%的收益",
+        	                    "充值特权：85折话费充值特权"
+        	                ],
+        	                price: "6888元",
+        	                gift: "赠送盈贝金灵（中级版本）"
+        	            },
+        	            {
+        	                level:2,
+        	                rank: "高级VIP",
+        	                privilege: [
+        	                    "每天15000金币红包奖励，签到即得；100%徒弟阅读进贡，20%徒孙阅读进贡",
+        	                    "直推一级会员奖励8元，一级推二级，也奖励你8元，直推50人以后，额外奖励三级每个5元",
+        	                    "管理奖金：一级、二级内任一会员升级，即可获得升级的1%收益",
+        	                    "充值特权：9折话费充值特权"
+        	                ],
+        	                price: "999元",
+        	                gift: ""
+        	            },
+        	            {
+        	                level:1,
+        	                rank: "初级VIP",
+        	                privilege: [
+        	                    "每天10000金币红包奖励，签到即得",
+        	                    "50%徒弟阅读进贡，10%徒孙阅读进贡",
+        	                    "推广奖金：直推1级会员奖励6元，1级推2级也奖励6元，直推50人以后额外奖励第3级，每个3元",
+        	                    "充值特权：95折话费充值特权"
+        	                ],
+        	                price: "199元",
+        	                gift: ""
+        	            },
+        	            {
+        	                level:0,
+        	                rank: "普通用户",
+        	                privilege: [
+        	                    "各类任务，轻松赚金币",
+        	                    "30%徒弟阅读进贡"
+        	                ],
+        	                token:"",
+        	                price: "",
+        	                gift: ""
+        	            },
+        	        ]
+        	    },
+        	    created:function(){
+        	        this.getToken();
+        	        // this.getData();
+        	    },
+        	    mounted:function(){
+        	
+        	    },
+        	    methods: {
+        	    	getToken:function(){
+        	    		if(isAndroid){
+        	    			if (window.android && typeof (window.android.getToken) == "function") {
+        	    			    var token = window.android.getToken();
+        	    			    this.token=token;
+        	                    this.getData();
+        	    			} else {
+        	    			    alert("没有android.getToken方法");
+        	    			}
+        	    		}
+        	    	},
+        	        getData:function(){
+        	            var _this=this;
+        	            axios.get(this.api+(isiOS?iosToken:this.token))
+        	            // axios.get("http://192.168.1.2:3000/user")
+        	            .then(function(res){
+        	                console.log(res.data);
+        	                if(res&&res.data.err_code==0){
+        	                    console.log(_this)
+        	                    _this.user=res.data.user;
+        	                }
+        	            })
+        	            .catch(function(err){
+        	            	console.log(err);
+        	                showToast('网络异常');
+        	            })
+        	        },
+        	        openMember:function(res,price,level){
+        	            console.log(res);
+        	            if(!res){
+        	                showToast('开通会员不能比当前会员等级低');
+        	                return false;
+        	            }
+
+        	            if(level==1||level==2){
+        	                window.location.href="./detail.html?level="+level+"&price="+parseInt(price);
+        	            }else{
+        	                window.location.href="./order.html?level="+level+"&price="+parseInt(price);
+        	            }
+        	        }
+        	    }
+        	})
+        }
+
+
     </script>
 </body>
 
