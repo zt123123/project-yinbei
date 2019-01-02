@@ -411,7 +411,7 @@
 
             $.ajax({
                 // url: "http://localhost:3000/user",
-                url: "http://inbbb.net/yb/user/detail?token="+token,
+                url: "http://inbbb.net/yb/user/detail?token="+(isiOS?iosToken:token),
                 method: "GET",
                 success:function(data){
                     if(data.err_code==0){
